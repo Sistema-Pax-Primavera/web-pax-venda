@@ -1,20 +1,33 @@
-import React, { useState } from 'react';
-import {  useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import './header.css'
 
 
 const HeaderVendas = () => {
   const [activeRoute, setActiveRoute] = useState(""); // Estado para acompanhar a rota ativa
   const navigate = useNavigate(); // Hook para navegação
-  const cliente = ''; // Suponha que a variável cliente seja definida
+  const location = useLocation();
 
-  // Função para lidar com o clique nos botões de menu
   const handleMenuClick = (route) => {
     // Navegar para a rota específica
+    console.log(route)
     navigate(route);
+    // Salvar a rota no localStorage
+    localStorage.setItem("page-venda", route);
     // Atualizar a rota ativa
     setActiveRoute(route);
   };
+
+  useEffect(() => {
+    const savedPage = localStorage.getItem("page-venda");
+
+    if (savedPage && savedPage !== location.pathname) {
+      localStorage.removeItem("page-venda");
+      setActiveRoute("");
+    } else {
+      setActiveRoute(savedPage);
+    }
+  }, [location.pathname]);
 
   return (
     <div className='navegacao-vendas'>
