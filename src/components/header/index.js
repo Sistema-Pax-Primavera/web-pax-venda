@@ -4,13 +4,12 @@ import './header.css'
 
 
 const HeaderVendas = () => {
-  const [activeRoute, setActiveRoute] = useState(""); // Estado para acompanhar a rota ativa
-  const navigate = useNavigate(); // Hook para navegação
+  const [activeRoute, setActiveRoute] = useState("");
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleMenuClick = (route) => {
     // Navegar para a rota específica
-    console.log(route)
     navigate(route);
     // Salvar a rota no localStorage
     localStorage.setItem("page-venda", route);
@@ -42,6 +41,12 @@ const HeaderVendas = () => {
         className={activeRoute === "/contratos-finalizados" ? "active" : ""}
       >
         Contratos Finalizados
+      </button>
+      <button
+        onClick={() => handleMenuClick("/cadastro")}
+        className={activeRoute === "/cadastro" ? "active" : ""}
+      >
+        Cadastro
       </button>
     </div>
   );

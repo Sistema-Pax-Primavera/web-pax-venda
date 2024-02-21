@@ -10,15 +10,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Carregando from '../../components/carregando';
+import Formulario from '../../components/formulario';
 
-function createData(id, titular, vendedor, unidade, data, tipo, status) {
-  return { id, titular, vendedor, unidade, data, tipo, status };
+function createData(id, nome, vendedor, unidade, data, tipo, status) {
+  return { id, nome, vendedor, unidade, data, tipo, status };
 }
 
 const rows = [
-  createData(1, 'Carlos Henrique', 'Sonia Souza', 'Dourados', '02/05/2024', 'Contrato Novo', 'Pendente'),
-  createData(2, 'Luiza Bitencur', 'Zacarias Juventude', 'Dourados', '03/05/2024', 'Contrato Novo', 'Pendente'),
-  createData(3, 'Felipe Alencar', 'Luzia Souza', 'Rio Brilhante', '04/05/2024', 'Contrato Novo', 'Pendente')
+  createData(1, 'Mateus Pitta', 'Sonia Souza', 'Dourados', '02/05/2024', 'Contrato Novo', 'Pendente'),
+  createData(2, 'Giovane Luna', 'Zacarias Juventude', 'Dourados', '03/05/2024', 'Contrato Novo', 'Pendente'),
+  createData(3, 'Diogo Perez', 'Luzia Souza', 'Rio Brilhante', '04/05/2024', 'Contrato Novo', 'Pendente'),
+  createData(3, 'Marcos Lopes', 'Luzia Souza', 'Rio Brilhante', '04/05/2024', 'Contrato Novo', 'Pendente')
 ];
 
 const Contratos = () => {
@@ -26,20 +28,34 @@ const Contratos = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [contratoSelecionado, setContratoSelecionado] = useState(null);
+  const [showFormulario, setShowFormulario] = useState(false);
 
   const handleSearch = () => {
     setShowTable(false); // Ocultar a tabela
-    setShowLoading(true); // Mostrar o componente de carregamento
+    setShowLoading(true);
 
     setTimeout(() => {
       const filteredResults = rows.filter(row =>
-        row.titular.toLowerCase().includes(searchTerm.toLowerCase())
+        row.nome.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       setSearchResults(filteredResults);
       setShowLoading(false); // Ocultar o componente de carregamento
       setShowTable(true); // Mostrar a tabela após 3 segundos
     }, 3000); // Definir um atraso de 3 segundos
+  };
+
+  const handleOpenFormulario = (contrato) => {
+    setContratoSelecionado(contrato);
+    setShowTable(false);
+    setShowLoading(false);
+    setShowFormulario(true);
+  };
+
+  const handleCloseFormulario = () => {
+    setShowFormulario(false);
+    setContratoSelecionado(null);
   };
 
   return (
@@ -55,7 +71,7 @@ const Contratos = () => {
           <button onClick={handleSearch}>PESQUISAR</button>
         </div>
 
-        {!showTable && !showLoading && (
+        {!showLoading && !showTable && !showFormulario && (
           <div className='imagem-pesquisa'>
             <img src={Pesquisa} alt="Ícone de pesquisa" />
           </div>
@@ -89,7 +105,7 @@ const Contratos = () => {
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.titular}
+                        {row.nome}
                       </TableCell>
                       <TableCell align="left">{row.vendedor}</TableCell>
                       <TableCell align="left">{row.unidade}</TableCell>
@@ -98,7 +114,7 @@ const Contratos = () => {
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className='abrir-contrato'>
-                          <button>ABRIR</button>
+                          <button onClick={() => handleOpenFormulario(row)}>Abrir</button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -108,6 +124,11 @@ const Contratos = () => {
             </TableContainer>
           </div>
 
+        )}
+        {showFormulario && contratoSelecionado && (
+          <div className='formulario-cliente'>
+            <Formulario dadosContrato={contratoSelecionado} onClose={handleCloseFormulario} />
+          </div>
         )}
       </div>
     </div>
