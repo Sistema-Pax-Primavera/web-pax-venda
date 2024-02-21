@@ -1,0 +1,62 @@
+.container-contratos-vendas{
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.clientes-contrato-venda{
+    display: flex;
+    flex-direction: column;
+    width: 88%;
+}
+
+.pesquisa-contrato-venda{
+    width: 100%;
+    gap: 10px;
+}
+
+.carregando-projetos{
+    display: flex;
+    align-items: center;
+    height: 300px;
+    justify-content: center;
+}
+
+.pesquisa-contrato-venda input{
+    background-color: var(--cinza-leve);
+    width: 30%;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.pesquisa-contrato-venda button{
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: var(--verde);
+    color: var(--branco);
+    font-weight: 800;
+    padding: 10px;
+}
+
+.imagem-pesquisa{
+    width: 88%;
+}
+
+.imagem-pesquisa img{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.tabela-contratos-vendas {
+    width: 95%;
+    margin-top: 10px;
+}
+
+.abrir-contrato button{
+    background-color: var(--verde);
+    color: var(--branco);
+    font-weight: 700;
+    cursor: pointer;
+}
