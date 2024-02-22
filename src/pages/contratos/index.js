@@ -114,7 +114,7 @@ const Contratos = () => {
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className='abrir-contrato'>
-                          <button onClick={() => handleOpenFormulario(row)}>Abrir</button>
+                          <button onClick={() => handleOpenFormulario(row)}>ABRIR</button>
                         </div>
                       </TableCell>
                     </TableRow>

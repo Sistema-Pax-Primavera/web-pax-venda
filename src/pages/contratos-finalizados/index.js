@@ -104,7 +104,7 @@ const ContratosFinalizados = () => {
                       key={row.id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row">
+                      <TableCell component="th" scopeh="row">
                         {row.titular}
                       </TableCell>
                       <TableCell align="left">{row.vendedor}</TableCell>
@@ -114,8 +114,8 @@ const ContratosFinalizados = () => {
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className='abrir-contrato'>
-                          <button onClick={() => handleOpenFormulario(row)}>Abrir</button>
-                          {row.status === 'Recusado' ? <button>Reenviar</button> : <></>}
+                          <button onClick={() => handleOpenFormulario(row)}>ABRIR</button>
+                          {row.status === 'Recusado' ? <button>REENVIAR</button> : <></>}
                         </div>
                       </TableCell>
                     </TableRow>
