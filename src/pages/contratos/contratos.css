@@ -4,6 +4,54 @@
     gap: 10px;
 }
 
+.avanca-form-volta{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.formulario-contratos-contratos{
+    width: 15%;
+}
+
+.confirmados-contratos-contratos{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.confirmados-contratos-contratos button{
+    width: 50%;
+    font-size: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.status-contrato{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.status-contrato label{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.button-retorn button{
+    color: var(--verde);
+    width: 12%;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px
+}
+
 .clientes-contrato-venda{
     display: flex;
     flex-direction: column;

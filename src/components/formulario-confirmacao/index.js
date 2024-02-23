@@ -24,8 +24,6 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
         }
     };
 
-
-
     return (
         <div className='formulario-confirmacao'>
             <div className='posicao-formulario-contrato'>
@@ -53,6 +51,9 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
                 <label><CheckboxWhite checked={checkboxStatus.dadosGerais} disabled /> Dados Gerais</label>
                 </div>
                 <div className='confirmados-contratos'>
+                <label><CheckboxWhite checked={checkboxStatus.dadosResidenciais} disabled  /> Dados Res.</label>
+                </div>
+                <div className='confirmados-contratos'>
                 <label><CheckboxWhite checked={checkboxStatus.cobranca} disabled /> Cobrança</label>
                 </div>
                 <div className='confirmados-contratos'>
@@ -65,6 +66,10 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
                 <button onClick={handleCadastrar}>CADASTRAR</button>
                 </div>
             </div>
+
+
+
+            
         </div>
     )
 }

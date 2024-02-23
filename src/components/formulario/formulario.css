@@ -28,6 +28,7 @@
 
 .salvar-associado-contrato button {
     cursor: pointer;
+    margin-top: 15px;
     font-weight: 500;
     background-color: var(--verde);
     width: 100%;
@@ -137,11 +138,57 @@
     width: 40%;
 }
 
-.campos-02-contrato {
+.rg-contrato {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 10%;
     margin-right: 2px
+}
+
+.rg-contrato input{
+    font-weight: 500;
+}
+
+.data-filiacao-contrato {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+}
+
+.campos-02-contrato{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.campos-05-contrato {
+    display: flex;
+    flex-direction: column;
+    width: 19%;
+}
+
+.dados-info-contract{
+    margin-top: -5px;
+}
+
+.campos-02-contrato input{
+    font-weight: 500
+}
+.campos-03-contrato{
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+}
+
+.campos-04-contrato {
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+}
+
+.campos-03-contrato input{
+    font-weight: 500
 }
 
 .tabela-info-contrato{

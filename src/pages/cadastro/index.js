@@ -10,7 +10,7 @@ const Cadastro = () => {
         <div className='container-contratos-vendas'>
             <HeaderVendas />
             <div className='formulario-cadastro-contrato'>
-                <Formulario dadosIniciais={{}} />
+                <Formulario dadosIniciais={{}}  />
             </div>
 
         </div>
