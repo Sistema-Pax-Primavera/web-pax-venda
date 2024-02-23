@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Carregando from '../../components/carregando';
 import Formulario from '../../components/formulario';
+import FormularioConfirmacao from '../../components/formulario-confirmacao';
 
 function createData(id, nome, vendedor, unidade, data, tipo, status) {
   return { id, nome, vendedor, unidade, data, tipo, status };
@@ -114,7 +115,7 @@ const Contratos = () => {
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className='abrir-contrato'>
-                          <button onClick={() => handleOpenFormulario(row)}>ABRIR</button>
+                          <button onClick={() => handleOpenFormulario(row)}>Abrir</button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -127,7 +128,7 @@ const Contratos = () => {
         )}
         {showFormulario && contratoSelecionado && (
           <div className='formulario-cliente'>
-            <Formulario dadosContrato={contratoSelecionado} onClose={handleCloseFormulario} />
+           <Formulario dadosIniciais={{}} />
           </div>
         )}
       </div>

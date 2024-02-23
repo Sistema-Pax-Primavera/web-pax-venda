@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Carregando from '../../components/carregando';
 import Formulario from '../../components/formulario';
+import FormularioConfirmacao from '../../components/formulario-confirmacao';
 
 
 const ContratosFinalizados = () => {
@@ -127,7 +128,7 @@ const ContratosFinalizados = () => {
         )}
         {showFormulario && contratoSelecionado && (
           <div className='formulario-cliente'>
-            <Formulario dadosContrato={contratoSelecionado} onClose={handleCloseFormulario} />
+            <Formulario dadosIniciais={{}} />
           </div>
         )}
       </div>

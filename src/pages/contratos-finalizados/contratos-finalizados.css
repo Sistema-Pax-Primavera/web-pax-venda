@@ -4,3 +4,7 @@
     gap: 5px;
 }
 
+.formulario-cliente{
+    display: flex;
+    gap: 5px;
+}
