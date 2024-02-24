@@ -145,6 +145,26 @@
     margin-right: 2px
 }
 
+.campos-03-contrato{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.campos-03-contrato label{
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.campos-03-contrato select{
+    font-weight: 500;
+}
+
+.rg-contrato label{
+    font-size: 12px;
+    font-weight: 500
+}
+
 .rg-contrato input{
     font-weight: 500;
 }
@@ -161,6 +181,12 @@
     flex-direction: column;
     width: 15%;
 }
+
+.campos-02-contrato label{
+    font-weight: 500;
+    font-size: 12px;
+}
+
 
 .campos-05-contrato {
     display: flex;
@@ -187,11 +213,101 @@
     width: 18%;
 }
 
+.campos-04-contrato label{
+    font-size: 12px;
+    font-weight: 500;
+}
+
 .campos-03-contrato input{
     font-weight: 500
 }
 
+.campo-info-bairro-contrato {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-info-bairro-contrato label{
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.campo-info-bairro-contrato input{
+    font-weight: 500;
+}
+
+.campo-info-bairro-contrato select{
+    font-weight: 500;
+}
+
+
 .tabela-info-contrato{
     display: flex;
     flex-direction: column;
+}
+
+.botaos-nav-contrato {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.botaos-nav-contrato button {
+    width: 16%;
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    gap: 10px;
+    margin-top: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.campos-01-contrato {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.campos-01-contrato input{
+    font-weight: 500;
+}
+
+.campos-01-contrato label{
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.legenda-cremacao-contrato{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.legenda-cremacao-contrato label{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.data-nascimento-contrato {
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+    margin-right: 3px;
+}
+
+.data-nascimento-contrato label {
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.data-nascimento-contrato input{
+    font-weight: 500;
 }

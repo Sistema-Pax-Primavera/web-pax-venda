@@ -121,3 +121,27 @@
 .data-filiacao-contrato input{
     width: 100%;
 }
+
+.documento-anexo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.documento-anexo img{
+    width: 80%;
+}
+
+.document button {
+    background-color: var(--verde);
+    padding: 10px;
+    color: var(--branco);
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+
+
+

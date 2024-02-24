@@ -26,6 +26,23 @@ import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SaveIcon from '@mui/icons-material/Save';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Documento from '../../../assets/documento.png'
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  height: 500,
+  bgcolor: 'background.paper',
+  borderRadius: 5,
+  p: 4,
+};
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -40,9 +57,19 @@ const rows = [
   createData(3, 'Marcos Lopes', 'Luzia Souza', 'Rio Brilhante', '04/05/2024', 'Contrato Novo', 'Pendente')
 ];
 
+
+function cliente(name, filiacao, carencia, falecimento, valor, especie) {
+  return { name, filiacao, carencia, falecimento, valor, especie };
+}
+
+const dependentes = [
+  cliente('Tor', '15/01/2023', '15/01/2025', '00/00/0000', '100,00', "Gator"),
+];
+
 const Contratos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [open, setOpen] = React.useState(false);
   const [showTable, setShowTable] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [contratoSelecionado, setContratoSelecionado] = useState(null);
@@ -56,11 +83,22 @@ const Contratos = () => {
   const [mostrarFormularioResidenciais, setMostrarFormularioResidenciais] = useState(false);
   const [arquivos, setArquivos] = useState([]);
   const [arquivoSelecionado, setArquivoSelecionado] = useState(null);
+  const [mostrarFormularioComerciais, setMostrarFormularioComerciais] = useState(false);
+  const [visualizarClicado, setVisualizarClicado] = useState(false);
+  const [mostrarBotoes, setMostrarBotoes] = useState(false);
+
+  const handleOpen = () => {
+    setMostrarBotoes(true);
+    setOpen(true);
+  };
+  
+  const handleClose = () => setOpen(false);
 
   const mostrarFormulario = (tipo) => {
     setMostrarFormularioGerais(tipo === 'dados-gerais');
     setMostrarFormularioResidenciais(tipo === 'dados-residencias');
     setMostrarFormularioCobranca(tipo === 'dados-cobranca');
+    setMostrarFormularioComerciais(tipo === 'dados-comerciais');
     setMostrarFormularioDependentes(tipo == 'dependentes');
     setMostrarFormularioAnexos(tipo === 'anexos');
   };
@@ -72,35 +110,6 @@ const Contratos = () => {
   };
 
 
-  const handleProcurarChange = (event) => {
-    setArquivoSelecionado(event.target.files[0]);
-  };
-
-  const handleAnexarClick = () => {
-    if (arquivoSelecionado) {
-      setArquivos([...arquivos, arquivoSelecionado]);
-      setArquivoSelecionado(null); // Limpar o arquivo selecionado após anexar
-    }
-  };
-
-  const handleExcluirClick = (index) => {
-    const novosArquivos = [...arquivos];
-    novosArquivos.splice(index, 1);
-    setArquivos(novosArquivos);
-  };
-
-  const handleDownloadClick = (arquivo) => {
-    saveAs(arquivo, arquivo.name);  // Utilizar a função saveAs para fazer o download
-  };
-
-  const [checkboxStatus, setCheckboxStatus] = useState({
-    dadosGerais: false,
-    dadosResidenciais: false,
-    cobranca: false,
-    dependentes: false,
-    anexos: false
-  });
-
   const handleCheckboxUpdate = (campo) => {
     setCheckboxStatus(prevState => ({
       ...prevState,
@@ -108,40 +117,6 @@ const Contratos = () => {
     }));
   };
 
-  const handleSalvarClick = () => {
-    // Lógica para salvar os dados gerais
-
-    // Atualizar o estado da checkbox de dados gerais
-    handleCheckboxUpdate('dadosGerais');
-  };
-
-  const handleSalvarResidenciais = () => {
-    // Lógica para salvar os dados de cobrança
-
-    // Atualizar o estado da checkbox de cobrança
-    handleCheckboxUpdate('dadosResidenciais');
-  };
-
-  const handleSalvarCobranca = () => {
-    // Lógica para salvar os dados de cobrança
-
-    // Atualizar o estado da checkbox de cobrança
-    handleCheckboxUpdate('cobranca');
-  };
-
-  const handleSalvarDependentes = () => {
-    // Lógica para salvar os dados dos dependentes
-
-    // Atualizar o estado da checkbox de dependentes
-    handleCheckboxUpdate('dependentes');
-  };
-
-  const handleSalvarAnexo = () => {
-    // Lógica para salvar os anexos
-
-    // Atualizar o estado da checkbox de anexos
-    handleCheckboxUpdate('anexos');
-  };
 
 
   const handleSwitchChange = () => {
@@ -152,10 +127,6 @@ const Contratos = () => {
   const handleSwitchCarencia = () => {
     // Atualiza o estado do switch
     setCarenciaAtivada(!carenciaAtivada);
-  };
-
-  const handleNacionalidade = (event) => {
-    setNacionalidade(JSON.parse(event.target.value));
   };
 
   const handleSearch = () => {
@@ -181,6 +152,7 @@ const Contratos = () => {
   };
 
   const handleCloseFormulario = () => {
+    setMostrarBotoes(false); // Esconde os botões de confirmação
     setShowFormulario(false);
     setContratoSelecionado(null);
     setShowTable(true);
@@ -258,11 +230,11 @@ const Contratos = () => {
         {showFormulario && contratoSelecionado && (
           <div className='avanca-form-volta'>
             <div className='button-retorn'>
-              <button onClick={handleCloseFormulario}><ArrowBackIosNewIcon fontSize={'small'} /> RETORNAR</button>
+            <button onClick={handleCloseFormulario}><ArrowBackIosNewIcon fontSize={'small'} /> RETORNAR</button>
             </div>
             <div className='container-contrato-cards'>
               <div className='formulario-confirma-cadastros'>
-                <div className='pet-cremacao-humana'>
+                <div className='botaos-nav-contrato'>
                   <button
                     className={mostrarFormularioGerais ? '' : 'botao-ativo'}
                     onClick={() => mostrarFormulario('dados-gerais')}
@@ -298,7 +270,7 @@ const Contratos = () => {
                   <div className='dados-info-contract'>
                     <div className='layout-linha'>
                       <div className='container-linha'>
-                        <div className='campos-01'>
+                        <div className='campos-01-contrato'>
                           <label>Nome</label>
                           <input
                           />
@@ -311,21 +283,20 @@ const Contratos = () => {
                           <label>RG</label>
                           <input />
                         </div>
-                        <div className='campos-03'>
+                        <div className='campos-03-contrato'>
                           <label>Contrato</label>
                           <input></input>
                         </div>
-                        <div className='campos-03'>
+                        <div className='campos-03-contrato'>
                           <label>Gênero</label>
                           <select></select>
                         </div>
-                        <div className='campos-03-contrato'>
-                          <label>Data Nascimento</label>
-                          <select></select>
-                        </div>
-
                       </div>
                       <div className='container-linha'>
+                        <div className='data-nascimento-contrato'>
+                          <label>Data Nascimento</label>
+                          <DateMaskInput />
+                        </div>
                         <div className='campos-02-contrato'>
                           <label>Religiao</label>
                           <select></select>
@@ -334,27 +305,28 @@ const Contratos = () => {
                           <label>UF</label>
                           <select></select>
                         </div>
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Naturalidade</label>
                           <input></input>
                         </div>
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Nacionalidade</label>
                           <select></select>
                         </div>
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Profissão</label>
                           <select></select>
                         </div>
 
-                        <div className='campos-02'>
+
+                      </div>
+                      <div className='container-linha'>
+                        <div className='campos-02-contrato'>
                           <label> Estado Civil</label>
                           <select />
                         </div>
-                      </div>
-                      <div className='container-linha'>
-                        <div className='campos-04-contrato'>
-                          <label>Carência Padrão ?</label>
+                        <div className='campos-02-contrato'>
+                          <label>Carência Padrão</label>
                           <Switch
                             checked={carenciaAtivada}
                             onChange={handleSwitchCarencia}
@@ -373,21 +345,21 @@ const Contratos = () => {
                             </div>
                           </>
                         )}
-                        <div className='campos-02-contrato'>
-                          <label>Cremação ?</label>
+                        <div className='rg-contrato'>
+                          <label>Cremação</label>
                           <Switch
                             checked={cremacaoAtivada}
                             onChange={handleSwitchChange}
                             size="small" />
                         </div>
                         {cremacaoAtivada && (
-                          <div className='campos-04-contrato'>
+                          <div className='campos-02-contrato'>
                             <label>Data da Cremação</label>
                             <DateMaskInput />
                           </div>
                         )}
                         <div className='salva-dependentes'>
-                          <button>SALVAR</button>
+                          <button >SALVAR</button>
                         </div>
                       </div>
                     </div>
@@ -398,51 +370,105 @@ const Contratos = () => {
                   <div className='dados-info-contract'>
                     <div className='layout-linha'>
                       <div className='container-linha'>
-                        <div className='campos-03'>
+                        <div className='campos-02-contrato'>
                           <label>CEP</label>
                           <input></input>
                         </div>
-                        <div className='campo-info-bairro'>
+                        <div className='campo-info-bairro-contrato'>
                           <label>UF</label>
                           <select></select>
                         </div>
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Município</label>
                           <input></input>
                         </div>
 
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Bairro</label>
                           <input></input>
                         </div>
-                        <div className='campo-info-bairro'>
+                        <div className='campo-info-bairro-contrato'>
                           <label>Quadra</label>
                           <input></input>
                         </div>
-                        <div className='campo-info-bairro'>
+                        <div className='campo-info-bairro-contrato'>
                           <label>Lote</label>
                           <input></input>
                         </div>
-                        <div className='campo-info-bairro'>
+                        <div className='campo-info-bairro-contrato'>
                           <label>Nº</label>
                           <input></input>
                         </div>
-                        <div className='campo-info-bairro'>
+                        <div className='campo-info-bairro-contrato'>
                           <label>Tipo</label>
                           <select></select>
                         </div>
                       </div>
                       <div className='container-linha'>
-                        <div className='campos-01'>
+                        <div className='campos-01-contrato'>
                           <label>Rua</label>
                           <input></input>
                         </div>
-                        <div className='campos-02'>
+                        <div className='campos-02-contrato'>
                           <label>Complemento</label>
                           <input></input>
                         </div>
                         <div className='salvar-associado-contrato'>
-                          <button>SALVAR</button>
+                          <button >SALVAR</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {mostrarFormularioComerciais && (
+                  <div className='dados-info-contract'>
+                    <div className='layout-linha'>
+                      <div className='container-linha'>
+                        <div className='campos-02-contrato'>
+                          <label>CEP</label>
+                          <input></input>
+                        </div>
+                        <div className='campo-info-bairro-contrato'>
+                          <label>UF</label>
+                          <select></select>
+                        </div>
+                        <div className='campos-02-contrato'>
+                          <label>Município</label>
+                          <input></input>
+                        </div>
+
+                        <div className='campos-02-contrato'>
+                          <label>Bairro</label>
+                          <input></input>
+                        </div>
+                        <div className='campo-info-bairro-contrato'>
+                          <label>Quadra</label>
+                          <input></input>
+                        </div>
+                        <div className='campo-info-bairro-contrato'>
+                          <label>Lote</label>
+                          <input></input>
+                        </div>
+                        <div className='campo-info-bairro-contrato'>
+                          <label>Nº</label>
+                          <input></input>
+                        </div>
+                        <div className='campo-info-bairro-contrato'>
+                          <label>Tipo</label>
+                          <select></select>
+                        </div>
+                      </div>
+                      <div className='container-linha'>
+                        <div className='campos-01-contrato'>
+                          <label>Rua</label>
+                          <input></input>
+                        </div>
+                        <div className='campos-02-contrato'>
+                          <label>Complemento</label>
+                          <input></input>
+                        </div>
+                        <div className='salvar-associado-contrato'>
+                          <button >SALVAR</button>
                         </div>
                       </div>
                     </div>
@@ -452,42 +478,42 @@ const Contratos = () => {
                   <div className='dados-info-contract'>
                     <div className='layout-linha-contrato'>
                       <div className='container-linha'>
-                        <div className='campos-cadastrais-02-contrato'>
+                        <div className='campos-02-contrato'>
                           <label>Dia de Pagamento </label>
                           <input></input>
                         </div>
-                        <div className='campos-cadastrais-02'>
+                        <div className='campos-02-contrato'>
                           <label>Primeria Parcela</label>
-                          <DateMaskInput />
+                          <input />
                         </div>
-                        <div className='campos-cadastrais-03-contrato'>
+                        <div className='campos-02-contrato'>
                           <label>Ordem Rota</label>
                           <input></input>
                         </div>
-                        <div className='campos-cadastrais-04'>
+                        <div className='rg-contrato'>
                           <label>Contrato</label>
                           <input></input>
                         </div>
-                        <div className='campos-cadastrais-02'>
+                        <div className='campos-02-contrato'>
                           <label>Plano</label>
                           <select></select>
                         </div>
-                        <div className='campos-cadastrais-06'>
+                        <div className='campos-03-contrato'>
                           <label>Região</label>
                           <select></select>
                         </div>
                       </div>
                       <div className='container-linha'>
-                        <div className='campos-cadastrais-04'>
+                        <div className='campos-02-contrato'>
                           <label>Transferido</label>
                           <Switch {...label} size="small" />
                         </div>
-                        <div className='campos-cadastrais-02'>
+                        <div className='campos-02-contrato'>
                           <label>Pagar Adesão</label>
                           <Switch {...label} size="small" />
                         </div>
                         <div className='salvar-associado-contrato'>
-                          <button>SALVAR</button>
+                          <button >SALVAR</button>
                         </div>
                       </div>
 
@@ -508,11 +534,11 @@ const Contratos = () => {
                                 <label>Nome</label>
                                 <input></input>
                               </div>
-                              <div className='campos-05-contrato'>
+                              <div className='data-nascimento-contrato'>
                                 <label>Data Nascimento</label>
                                 <DateMaskInput />
                               </div>
-                              <div className='data-filiacao-contrato'>
+                              <div className='data-nascimento-contrato'>
                                 <label>Data Filiação</label>
                                 <DateMaskInput />
                               </div>
@@ -528,15 +554,15 @@ const Contratos = () => {
                                 <label>Status</label>
                                 <input></input>
                               </div>
-                              <div className='campos-05-contrato'>
+                              <div className='campos-03-contrato'>
                                 <label>Valor Adicional</label>
                                 <input></input>
                               </div>
-                              <div className='campos-02-contrato'>
+                              <div className='data-nascimento-contrato'>
                                 <label> Falecimento</label>
                                 <DateMaskInput />
                               </div>
-                              <div className='campos-02'>
+                              <div className='campos-02-contrato'>
                                 <label>Parentesco</label>
                                 <select></select>
                               </div>
@@ -547,7 +573,7 @@ const Contratos = () => {
                             </div>
                             <div className='container-linha'>
                               <div className='campos-legenda-contrato'>
-                                <div className='legenda-cremacao'>
+                                <div className='legenda-cremacao-contrato'>
                                   <div className='legenda-amarela'></div>
                                   <label>Em Carência</label>
                                   <div className='legenda-roxa'></div>
@@ -567,51 +593,52 @@ const Contratos = () => {
                         {formularioAtivo === 'pet' && (
                           <div className='layout-linha-contrato2'>
                             <div className='container-linha'>
-                              <div className='campos-01'>
+                              <div className='campos-01-contrato'>
                                 <label>Nome</label>
                                 <input></input>
                               </div>
-                              <div className='campos-data-contrato2'>
+                              <div className='data-nascimento-contrato'>
                                 <label>Data Nascimento</label>
                                 <DateMaskInput />
                               </div>
-                              <div className='campos-data-contrato'>
+                              <div className='data-nascimento-contrato'>
                                 <label>Data Filiação</label>
                                 <DateMaskInput />
                               </div>
-                              <div className='campos-03'>
+                              <div className='rg-contrato'>
                                 <label>Peso</label>
                                 <input></input>
                               </div>
-                              <div className='campos-03'>
+                              <div className='rg-contrato'>
                                 <label>Altura</label>
                                 <input></input>
                               </div>
-                              <div className='campos-03'>
-                                <label>Cor</label>
-                                <input></input>
-                              </div>
+
 
                             </div>
                             <div className='container-linha'>
-                              <div className='campos-02'>
+                              <div className='campos-02-contrato'>
                                 <label>Espécie</label>
                                 <select></select>
                               </div>
-                              <div className='campos-02'>
+                              <div className='rg-contrato'>
+                                <label>Cor</label>
+                                <input></input>
+                              </div>
+                              <div className='campos-02-contrato'>
                                 <label>Raça</label>
                                 <select></select>
                               </div>
-                              <div className='campos-02'>
+                              <div className='campos-02-contrato'>
                                 <label>Porte</label>
                                 <select></select>
                               </div>
-                              <div className='campos-02'>
+                              <div className='campos-02-contrato'>
                                 <label>Modalidade</label>
                                 <select></select>
                               </div>
 
-                              <div className='campos-02'>
+                              <div className='data-nascimento-contrato'>
                                 <label> Falecimento</label>
                                 <DateMaskInput />
                               </div>
@@ -622,7 +649,7 @@ const Contratos = () => {
                             </div>
                             <div className='container-linha'>
                               <div className='campos-legenda-contrato'>
-                                <div className='legenda-cremacao'>
+                                <div className='legenda-cremacao-contrato'>
                                   <div className='legenda-amarela'></div>
                                   <label>Em Carência</label>
                                   <div className='legenda-roxa'></div>
@@ -664,19 +691,19 @@ const Contratos = () => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {rows.map((row) => (
+                              {dependentes.map((dependente) => (
                                 <TableRow
-                                  key={row.name}
+                                  key={dependente.name}
                                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                   <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {dependente.name}
                                   </TableCell>
-                                  <TableCell align="center">{row.filiacao}</TableCell>
-                                  <TableCell align="center">{row.carencia}</TableCell>
-                                  <TableCell align="center">{row.falecimento}</TableCell>
-                                  <TableCell align="center">{row.valor}</TableCell>
-                                  <TableCell align="center">{row.especie}</TableCell>
+                                  <TableCell align="center">{dependente.filiacao}</TableCell>
+                                  <TableCell align="center">{dependente.carencia}</TableCell>
+                                  <TableCell align="center">{dependente.falecimento}</TableCell>
+                                  <TableCell align="center">{dependente.valor}</TableCell>
+                                  <TableCell align="center">{dependente.especie}</TableCell>
                                   <TableCell align="center">
                                     <div className='botao-opcao'>
                                       <div className='edit-botao'>
@@ -706,13 +733,29 @@ const Contratos = () => {
                           <div className='container-contratos'>
                             <div className='tipo-contrato-associado'>
                               <div className='contrato-associados-anexo'>
-                                <label>Adicionar</label>
+                                <label>Arquivo</label>
                                 <div className='document'>
                                   <a>
                                     <PostAddIcon fontSize={'large'} />
                                   </a>
-                                  <input type="file" onChange={handleProcurarChange} />
-                                  <button onClick={handleAnexarClick}>ANEXAR</button>
+
+                                  <button onClick={handleOpen}>VISUALIZAR</button>
+                                  <Modal
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                  >
+                                    <Box sx={style}>
+                                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        <div className='documento-anexo'>
+                                          <img src={Documento}></img>
+                                        </div>
+
+                                      </Typography>
+
+                                    </Box>
+                                  </Modal>
                                 </div>
                               </div>
 
@@ -751,7 +794,7 @@ const Contratos = () => {
 
               </div >
               <div className='formulario-contratos-contratos'>
-                <ConfirmacaoContratos />
+              <ConfirmacaoContratos mostrarBotoes={mostrarBotoes} />
               </div>
             </div>
             <ToastContainer />

@@ -11,7 +11,7 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
 
     const handleCadastrar = () => {
         const todasMarcadas = Object.values(checkboxStatus).every(status => status);
-        
+
         if (todasMarcadas) {
             setToastMessage('Cadastro Realizado');
             toast.success('Cadastro realizado com sucesso!'); // Chamada correta da função success
@@ -48,28 +48,31 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
                     <label>Confimados</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <label><CheckboxWhite checked={checkboxStatus.dadosGerais} disabled /> Dados Gerais</label>
+                    <label><CheckboxWhite checked={checkboxStatus.dadosGerais} disabled /> Dados Gerais</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <label><CheckboxWhite checked={checkboxStatus.dadosResidenciais} disabled  /> Dados Res.</label>
+                    <label><CheckboxWhite checked={checkboxStatus.dadosResidenciais} disabled /> Dados Res.</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <label><CheckboxWhite checked={checkboxStatus.cobranca} disabled /> Cobrança</label>
+                    <label><CheckboxWhite checked={checkboxStatus.dadosComerciais} disabled /> Dados Comer</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <label><CheckboxWhite checked={checkboxStatus.dependentes} disabled  /> Dependentes</label>
+                    <label><CheckboxWhite checked={checkboxStatus.cobranca} disabled /> Cobrança</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <label><CheckboxWhite checked={checkboxStatus.anexos} disabled  /> Anexos</label>
+                    <label><CheckboxWhite checked={checkboxStatus.dependentes} disabled /> Dependentes</label>
                 </div>
                 <div className='confirmados-contratos'>
-                <button onClick={handleCadastrar}>CADASTRAR</button>
+                    <label><CheckboxWhite checked={checkboxStatus.anexos} disabled /> Anexos</label>
+                </div>
+                <div className='confirmados-contratos'>
+                    <button onClick={handleCadastrar}>CADASTRAR</button>
                 </div>
             </div>
 
 
 
-            
+
         </div>
     )
 }

@@ -5,10 +5,12 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CheckboxWhite from '../../components/checkbox/index'
 
-const ConfirmacaoContratos = () => {
-  return (
-    <div>
-      <div className='posicao-formulario-contrato'>
+const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMostrarBotoesConfirmacao }) => {
+
+
+    return (
+        <div>
+            <div className='posicao-formulario-contrato'>
                 <div className='tipo-contrato-data'>
                     <div className='separacao-contrato'>
                         <ArticleIcon fontSize={'small'} />
@@ -22,7 +24,7 @@ const ConfirmacaoContratos = () => {
                         <CalendarMonthIcon fontSize={'small'} />
                         <div className='tipo-contrato-novo'>
                             <label>22/05/2024</label>
-                            
+
                             <label>Data Contrato</label>
                         </div>
                     </div>
@@ -30,16 +32,20 @@ const ConfirmacaoContratos = () => {
 
                 <div className='status-contrato'>
                     <label>Status do Contrato</label>
-                    <label>Vizualise o anexo(pdf) para<br></br>liberar alteração de satus!</label>
+                    <label>Vizualise o anexo(pdf) paraliberar alteração de status!</label>
                 </div>
-                
+
                 <div className='confirmados-contratos-contratos'>
-                <button>CADASTRAR</button>
-                <button>RECUSADO</button>
+                    {mostrarBotoes && !mostrarBotoesConfirmacao && (
+                        <div className='confirmados-contratos-contratos'>
+                            <button onClick={() => setMostrarBotoesConfirmacao(true)}>CADASTRAR</button>
+                            <button onClick={() => setMostrarBotoesConfirmacao(true)}>RECUSADO</button>
+                        </div>
+                    )}
                 </div>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default ConfirmacaoContratos;

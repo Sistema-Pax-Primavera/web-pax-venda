@@ -48,9 +48,11 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "file-saver": "^2.0.5",
+    "pdfjs-dist": "^4.0.379",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-input-mask": "^2.0.4",
+    "react-pdf": "^7.7.1",
     "react-router-dom": "^6.22.0",
     "react-toastify": "^10.0.4",
     "single-spa-react": "^4.3.1"
