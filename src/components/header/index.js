@@ -34,7 +34,7 @@ const HeaderVendas = () => {
         onClick={() => handleMenuClick("/contratos")}
         className={activeRoute === "/contratos" ? "active" : ""}
       >
-        Contratos
+        Contratos Pendentes
       </button>
       <button
         onClick={() => handleMenuClick("/contratos-finalizados")}
