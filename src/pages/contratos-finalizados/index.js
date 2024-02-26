@@ -12,6 +12,8 @@ import Paper from '@mui/material/Paper';
 import Carregando from '../../components/carregando';
 import Formulario from '../../components/formulario';
 import FormularioConfirmacao from '../../components/formulario-confirmacao';
+import FormularioContratosFinalizados from '../../components/form-contratos-fina';
+import '../../components/form-contratos-fina/formulario-finalizados.css';
 
 
 const ContratosFinalizados = () => {
@@ -66,71 +68,8 @@ const ContratosFinalizados = () => {
   return (
     <div className='container-contratos-vendas'>
       <HeaderVendas />
-      <div className='clientes-contrato-venda'>
-        {showTable && (
-          <div className='pesquisa-contrato-venda'>
-            <input
-              placeholder='Informe o nome do cliente'
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch}>PESQUISAR</button>
-          </div>
-        )}
-
-        {showLoading &&
-          <div className='carregando-projetos'>
-            <Carregando />
-          </div>
-        } {/* Renderizar o componente de carregamento se showLoading for verdadeiro */}
-
-        {showTable && (
-          <div className='tabela-contratos-vendas'>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Titular</TableCell>
-                    <TableCell align="left">Vendedor</TableCell>
-                    <TableCell align="left">Unidade</TableCell>
-                    <TableCell align="left">Data</TableCell>
-                    <TableCell align="left">Tipo</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">Opções</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell component="th" scopeh="row">
-                        {row.titular}
-                      </TableCell>
-                      <TableCell align="left">{row.vendedor}</TableCell>
-                      <TableCell align="left">{row.unidade}</TableCell>
-                      <TableCell align="left">{row.data}</TableCell>
-                      <TableCell align="left">{row.tipo}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
-                      <TableCell align="center">
-                        <div className='abrir-contrato'>
-                          <button onClick={() => handleOpenFormulario(row)}>ABRIR</button>
-                          {row.status === 'Recusado' ? <button>REENVIAR</button> : <></>}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        )}
-        {showFormulario && contratoSelecionado && (
-          <div className='formulario-cliente'>
-            <Formulario dadosIniciais={{}} />
-          </div>
-        )}
+      <div className='clientes-contrato-venda8'>
+        <FormularioContratosFinalizados />
       </div>
     </div>
   );

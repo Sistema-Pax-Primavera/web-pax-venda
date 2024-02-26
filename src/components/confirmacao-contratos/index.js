@@ -3,7 +3,8 @@ import { toast } from 'react-toastify'; // Importando a função toast
 import 'react-toastify/dist/ReactToastify.css'; // Importando o estilo da biblioteca
 import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import CheckboxWhite from '../../components/checkbox/index'
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMostrarBotoesConfirmacao }) => {
 
@@ -38,8 +39,8 @@ const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMost
                 <div className='confirmados-contratos-contratos'>
                     {mostrarBotoes && !mostrarBotoesConfirmacao && (
                         <div className='confirmados-contratos-contratos'>
-                            <button onClick={() => setMostrarBotoesConfirmacao(true)}>CADASTRAR</button>
-                            <button onClick={() => setMostrarBotoesConfirmacao(true)}>RECUSADO</button>
+                            <button onClick={() => setMostrarBotoesConfirmacao(true)}><AddTaskIcon fontSize={'small'}/></button>
+                            <button onClick={() => setMostrarBotoesConfirmacao(true)}><HighlightOffIcon fontSize={'small'} color={'warning'} /></button>
                         </div>
                     )}
                 </div>

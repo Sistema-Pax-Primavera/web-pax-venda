@@ -78,6 +78,34 @@
     flex-direction: column;
 }
 
+.button-pet-humano button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    position: relative; /* Adicionado */
+}
+
+.button-pet-humano button:focus {
+    outline: none;
+}
+
+.button-pet-humano button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Ajuste a distância da borda inferior conforme necessário */
+    left: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 2px;
+    cursor: pointer;
+    width: 97%;
+    z-index: 5;
+    border-bottom: 3px solid yellow; /* Cor da sobreborda */
+}
+
+
 .salva-anexo-formulario{
     width: 20%;
 }
@@ -109,6 +137,7 @@
     display: flex;
     font-size: 12px;
     cursor: pointer;
+    padding: 10px;
     align-items: center;
     gap: 10px;
     background-color: var(--verde);
@@ -117,8 +146,7 @@
 
 .container-contrato-cards {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 5px;
     width: 100%;
 }
 

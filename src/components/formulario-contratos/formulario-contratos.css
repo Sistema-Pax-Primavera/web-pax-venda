@@ -1,0 +1,18 @@
+.container-contratos-vendas8{
+    display: flex;
+    gap: 10px;
+    width: 88%;
+}
+
+.fecha-pdf-contrato{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+}
+
+.fecha-pdf-contrato button{
+    color: var(--vermelho);
+    cursor: pointer;
+    background-color: var(--branco);
+}

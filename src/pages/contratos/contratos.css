@@ -20,12 +20,12 @@
     gap: 5px;
     width: 100%;
 }
-
 .confirmados-contratos-contratos button{
     width: 50%;
     font-size: 10px;
     margin-top: 10px;
     text-align: center;
+    color: var(--verde);
     font-weight: 600;
 }
 
@@ -50,6 +50,12 @@
     align-items: center;
     gap: 10px;
     font-size: 10px
+}
+
+.clientes-contrato-venda1{
+    display: flex;
+    flex-direction: column;
+    width:100%;
 }
 
 .clientes-contrato-venda{
@@ -90,6 +96,9 @@
 
 .imagem-pesquisa{
     width: 88%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .imagem-pesquisa img{
@@ -116,6 +125,13 @@
     display: flex;
     flex-direction: column;
     margin-right: 5px;
+}
+
+.clientes-contrato-venda8{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 88%;
 }
 
 .data-filiacao-contrato input{
