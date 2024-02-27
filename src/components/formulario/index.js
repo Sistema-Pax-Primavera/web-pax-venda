@@ -655,7 +655,6 @@ const Formulario = ({ dadosContrato = {} }) => {
                         <TableCell align="center">Falecimento</TableCell>
                         <TableCell align="center">Valor</TableCell>
                         <TableCell align="center">Espécie</TableCell>
-                        <TableCell align="center">Opções</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -676,20 +675,7 @@ const Formulario = ({ dadosContrato = {} }) => {
                           </TableCell>
                           <TableCell align="center">{row.valor}</TableCell>
                           <TableCell align="center">{row.especie}</TableCell>
-                          <TableCell align="center">
-                            <div className="botao-opcao">
-                              <div className="edit-botao">
-                                <button>
-                                  <ModeEditOutlineIcon fontSize={"small"} />
-                                </button>
-                              </div>
-                              <div className="delete-botao">
-                                <button>
-                                  <DeleteForeverIcon fontSize={"small"} />
-                                </button>
-                              </div>
-                            </div>
-                          </TableCell>
+
                         </TableRow>
                       ))}
                     </TableBody>

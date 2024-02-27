@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import HeaderVendas from "../header/index";
+import "./formulario-contratos.css";
 import Pesquisa from "../../../assets/pesquisa.svg";
 import PersonIcon from "@mui/icons-material/Person";
 import Table from "@mui/material/Table";
@@ -6,13 +8,13 @@ import TableBody from "@mui/material/TableBody";
 import Switch from "@mui/material/Switch";
 import PetsIcon from "@mui/icons-material/Pets";
 import TableCell from "@mui/material/TableCell";
-import DateMaskInput from "../../components/inputs";
+import DateMaskInput from "../inputs";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Carregando from "../../components/carregando";
+import Carregando from "../carregando";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ConfirmacaoContratos from "../../components/confirmacao-contratos";
+import ConfirmacaoContratos from "../confirmacao-contratos";
 import Paper from "@mui/material/Paper";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -29,7 +31,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
-import './formulario-finalizados.css';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const style = {
   position: "absolute",
@@ -96,7 +98,7 @@ const dependentes = [
   cliente("Tor", "15/01/2023", "15/01/2025", "00/00/0000", "100,00", "Gator"),
 ];
 
-const FormularioContratosFinalizados = () => {
+const FormularioContratos = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -120,6 +122,24 @@ const FormularioContratosFinalizados = () => {
     useState(false);
   const [visualizarClicado, setVisualizarClicado] = useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [input1, setInput1] = useState('');
+  const [input2, setInput2] = useState('');
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirmButtonClick = () => {
+    // Adicione aqui a lógica para lidar com os valores dos inputs após o botão de confirmação ser clicado
+    // Pode ser um estado no componente pai, uma chamada de API, etc.
+    // Exemplo: setMostrarBotoesConfirmacao(false);
+    handleCloseModal();
+  };
 
   const handleOpen = () => {
     setMostrarBotoes(true);
@@ -140,7 +160,6 @@ const FormularioContratosFinalizados = () => {
   const [formularioAtivo, setFormularioAtivo] = useState("humano");
 
   const alternarFormulario = (formulario) => {
-    console.log(formulario)
     setFormularioAtivo(formulario);
   };
 
@@ -189,11 +208,6 @@ const FormularioContratosFinalizados = () => {
     setContratoSelecionado(null);
     setShowTable(true);
   };
-
-  useEffect(() => {
-    setFormularioAtivo("humano")
-    console.log(formularioAtivo)
-  }, []);
 
   return (
     <div className="container-contratos-vendas1">
@@ -263,14 +277,14 @@ const FormularioContratosFinalizados = () => {
           </div>
         )}
         {showFormulario && contratoSelecionado && (
-          <div className="avanca-form-volta4">
+          <div className="avanca-form-volta">
             <div className="button-retorn">
               <button onClick={handleCloseFormulario}>
                 <ArrowBackIosNewIcon fontSize={"small"} /> RETORNAR
               </button>
             </div>
             <div className="container-contrato-cards">
-              <div className="formulario-confirma-finalizados">
+              <div className="formulario-confirma-cadastros">
                 <div className="botaos-nav-contrato">
                   <button
                     className={mostrarFormularioGerais ? "" : "botao-ativo"}
@@ -397,9 +411,7 @@ const FormularioContratosFinalizados = () => {
                             <DateMaskInput />
                           </div>
                         )}
-                        <div className="salva-dependentes">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -451,9 +463,7 @@ const FormularioContratosFinalizados = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -505,9 +515,7 @@ const FormularioContratosFinalizados = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -550,9 +558,7 @@ const FormularioContratosFinalizados = () => {
                           <label>Pagar Adesão</label>
                           <Switch {...label} size="small" />
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -598,13 +604,11 @@ const FormularioContratosFinalizados = () => {
                                 <label>Parentesco</label>
                                 <select></select>
                               </div>
-                              <div className="salva-dependentes">
-                                <button>SALVAR</button>
-                              </div>
+
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
-                                <div className="legenda-cremacao-contrato-finalizado">
+                                <div className="legenda-cremacao-contrato">
                                   <div className="legenda-amarela"></div>
                                   <label>Em Carência</label>
                                   <div className="legenda-roxa"></div>
@@ -671,9 +675,7 @@ const FormularioContratosFinalizados = () => {
                                 <DateMaskInput />
                               </div>
 
-                              <div className="salva-dependentes">
-                                <button>SALVAR</button>
-                              </div>
+
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
@@ -694,20 +696,24 @@ const FormularioContratosFinalizados = () => {
                           </div>
                         )}
                         <div className="button-pet-humano">
-                  <button
-                    className={formularioAtivo === "pet" ? "active" : ""}
-                    onClick={() => alternarFormulario("pet")}
-                  >
-                    <PetsIcon fontSize={"small"} /> PET
-                  </button>
-                  <button
-                    className={formularioAtivo === "humano" ? "active" : ""}
-                    onClick={() => alternarFormulario("humano")}
-                  >
-                    <AccessibilityNewIcon fontSize={"small"} />
-                    HUMANO
-                  </button>
-                </div>
+                          <button
+                            className={
+                              formularioAtivo === "pet" ? "active" : ""
+                            }
+                            onClick={() => alternarFormulario("pet")}
+                          >
+                            <PetsIcon fontSize={"small"} /> PET
+                          </button>
+                          <button
+                            className={
+                              formularioAtivo === "humano" ? "active" : ""
+                            }
+                            onClick={() => alternarFormulario("humano")}
+                          >
+                            <AccessibilityNewIcon fontSize={"small"} />
+                            HUMANO
+                          </button>
+                        </div>
                       </div>
                       <div className="container-linha2">
                         <TableContainer component={Paper}>
@@ -727,7 +733,7 @@ const FormularioContratosFinalizados = () => {
                                 </TableCell>
                                 <TableCell align="center">Valor</TableCell>
                                 <TableCell align="center">Espécie</TableCell>
-                                <TableCell align="center">Opções</TableCell>
+
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -758,24 +764,7 @@ const FormularioContratosFinalizados = () => {
                                   <TableCell align="center">
                                     {dependente.especie}
                                   </TableCell>
-                                  <TableCell align="center">
-                                    <div className="botao-opcao">
-                                      <div className="edit-botao">
-                                        <button>
-                                          <ModeEditOutlineIcon
-                                            fontSize={"small"}
-                                          />
-                                        </button>
-                                      </div>
-                                      <div className="delete-botao">
-                                        <button>
-                                          <DeleteForeverIcon
-                                            fontSize={"small"}
-                                          />
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </TableCell>
+
                                 </TableRow>
                               ))}
                             </TableBody>
@@ -799,7 +788,9 @@ const FormularioContratosFinalizados = () => {
                                     <PostAddIcon fontSize={"large"} />
                                   </a>
 
-                                  <button>VISUALIZAR</button>
+                                  <button onClick={handleOpen}>
+                                    VISUALIZAR
+                                  </button>
                                   <Modal
                                     open={open}
                                     onClose={handleClose}
@@ -812,6 +803,11 @@ const FormularioContratosFinalizados = () => {
                                         variant="h6"
                                         component="h2"
                                       >
+                                        <div className="fecha-pdf-contrato">
+                                          <button onClick={handleClose}><HighlightOffIcon fontSize={'small'} /></button>
+                                        </div>
+                                      </Typography>
+                                      <Typography>
                                         <div className="documento-anexo">
                                           <img src={Documento}></img>
                                         </div>
@@ -858,14 +854,26 @@ const FormularioContratosFinalizados = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="salva-anexo-formulario">
-                        <button>SALVAR</button>
-                      </div>
+
                     </div>
                   </div>
                 )}
               </div>
+              <div className="formulario-contratos-contratos">
+                <ConfirmacaoContratos mostrarBotoes={mostrarBotoes} onOpenModal={handleOpenModal} />
+              </div>
+              {isModalOpen && (
+                <Modal onClose={handleCloseModal}>
+                  {/* Conteúdo da sua modal */}
+                  <label>Input 1:</label>
+                  <input type="text" value={input1} onChange={(e) => setInput1(e.target.value)} />
+                  <label>Input 2:</label>
+                  <input type="text" value={input2} onChange={(e) => setInput2(e.target.value)} />
+                  <button onClick={handleConfirmButtonClick}>Confirmar</button>
+                </Modal>
+              )}
             </div>
+            <ToastContainer />
           </div>
         )}
       </div>
@@ -873,4 +881,4 @@ const FormularioContratosFinalizados = () => {
   );
 };
 
-export default FormularioContratosFinalizados;
+export default FormularioContratos;

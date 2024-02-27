@@ -12,8 +12,8 @@ import Paper from '@mui/material/Paper';
 import Carregando from '../../components/carregando';
 import Formulario from '../../components/formulario';
 import FormularioConfirmacao from '../../components/formulario-confirmacao';
-import FormularioContratosFinalizados from '../../components/form-contratos-fina';
-import '../../components/form-contratos-fina/formulario-finalizados.css';
+import FormularioContratosFinalizados from '../../components/formulario-finalizado';
+import '../../components/formulario-finalizado/formulario-finalizados.css';
 
 
 const ContratosFinalizados = () => {

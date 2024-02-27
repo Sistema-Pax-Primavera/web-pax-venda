@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import HeaderVendas from "../../components/header/index";
-import "./formulario-contratos.css";
+import React, { useEffect, useState } from "react";
 import Pesquisa from "../../../assets/pesquisa.svg";
 import PersonIcon from "@mui/icons-material/Person";
 import Table from "@mui/material/Table";
@@ -8,13 +6,13 @@ import TableBody from "@mui/material/TableBody";
 import Switch from "@mui/material/Switch";
 import PetsIcon from "@mui/icons-material/Pets";
 import TableCell from "@mui/material/TableCell";
-import DateMaskInput from "../../components/inputs";
+import DateMaskInput from "../inputs";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Carregando from "../../components/carregando";
+import Carregando from "../carregando";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ConfirmacaoContratos from "../../components/confirmacao-contratos";
+import ConfirmacaoContratos from "../confirmacao-contratos";
 import Paper from "@mui/material/Paper";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -31,7 +29,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import './formulario-finalizados.css';
 
 const style = {
   position: "absolute",
@@ -59,7 +57,7 @@ const rows = [
     "Dourados",
     "02/05/2024",
     "Contrato Novo",
-    "Pendente"
+    "Cadastrado"
   ),
   createData(
     2,
@@ -68,7 +66,7 @@ const rows = [
     "Dourados",
     "03/05/2024",
     "Contrato Novo",
-    "Pendente"
+    "Cadastrado"
   ),
   createData(
     3,
@@ -77,7 +75,7 @@ const rows = [
     "Rio Brilhante",
     "04/05/2024",
     "Contrato Novo",
-    "Pendente"
+    "Recusado"
   ),
   createData(
     3,
@@ -86,7 +84,7 @@ const rows = [
     "Rio Brilhante",
     "04/05/2024",
     "Contrato Novo",
-    "Pendente"
+    "Cadastrado"
   ),
 ];
 
@@ -98,7 +96,7 @@ const dependentes = [
   cliente("Tor", "15/01/2023", "15/01/2025", "00/00/0000", "100,00", "Gator"),
 ];
 
-const FormularioContratos = () => {
+const FormularioContratosFinalizados = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -142,6 +140,7 @@ const FormularioContratos = () => {
   const [formularioAtivo, setFormularioAtivo] = useState("humano");
 
   const alternarFormulario = (formulario) => {
+    console.log(formulario)
     setFormularioAtivo(formulario);
   };
 
@@ -190,6 +189,11 @@ const FormularioContratos = () => {
     setContratoSelecionado(null);
     setShowTable(true);
   };
+
+  useEffect(() => {
+    setFormularioAtivo("humano")
+    console.log(formularioAtivo)
+  }, []);
 
   return (
     <div className="container-contratos-vendas1">
@@ -249,6 +253,11 @@ const FormularioContratos = () => {
                           <button onClick={() => handleOpenFormulario(row)}>
                             ABRIR
                           </button>
+                          {row.status === "Recusado" ?
+                            <button onClick={() => handleOpenFormulario(row)}>
+                              REENVIAR
+                            </button>
+                            : <></>}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -259,14 +268,14 @@ const FormularioContratos = () => {
           </div>
         )}
         {showFormulario && contratoSelecionado && (
-          <div className="avanca-form-volta">
+          <div className="avanca-form-volta4">
             <div className="button-retorn">
               <button onClick={handleCloseFormulario}>
                 <ArrowBackIosNewIcon fontSize={"small"} /> RETORNAR
               </button>
             </div>
             <div className="container-contrato-cards">
-              <div className="formulario-confirma-cadastros">
+              <div className="formulario-confirma-finalizados">
                 <div className="botaos-nav-contrato">
                   <button
                     className={mostrarFormularioGerais ? "" : "botao-ativo"}
@@ -393,9 +402,6 @@ const FormularioContratos = () => {
                             <DateMaskInput />
                           </div>
                         )}
-                        <div className="salva-dependentes">
-                          <button>SALVAR</button>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -447,9 +453,7 @@ const FormularioContratos = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -501,9 +505,7 @@ const FormularioContratos = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -546,9 +548,7 @@ const FormularioContratos = () => {
                           <label>Pagar Adesão</label>
                           <Switch {...label} size="small" />
                         </div>
-                        <div className="salvar-associado-contrato">
-                          <button>SALVAR</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -594,13 +594,11 @@ const FormularioContratos = () => {
                                 <label>Parentesco</label>
                                 <select></select>
                               </div>
-                              <div className="salva-dependentes">
-                                <button>SALVAR</button>
-                              </div>
+
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
-                                <div className="legenda-cremacao-contrato">
+                                <div className="legenda-cremacao-contrato-finalizado">
                                   <div className="legenda-amarela"></div>
                                   <label>Em Carência</label>
                                   <div className="legenda-roxa"></div>
@@ -667,9 +665,7 @@ const FormularioContratos = () => {
                                 <DateMaskInput />
                               </div>
 
-                              <div className="salva-dependentes">
-                                <button>SALVAR</button>
-                              </div>
+
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
@@ -691,17 +687,13 @@ const FormularioContratos = () => {
                         )}
                         <div className="button-pet-humano">
                           <button
-                            className={
-                              formularioAtivo === "pet" ? "active" : ""
-                            }
+                            className={formularioAtivo === "pet" ? "active" : ""}
                             onClick={() => alternarFormulario("pet")}
                           >
                             <PetsIcon fontSize={"small"} /> PET
                           </button>
                           <button
-                            className={
-                              formularioAtivo === "humano" ? "active" : ""
-                            }
+                            className={formularioAtivo === "humano" ? "active" : ""}
                             onClick={() => alternarFormulario("humano")}
                           >
                             <AccessibilityNewIcon fontSize={"small"} />
@@ -727,7 +719,6 @@ const FormularioContratos = () => {
                                 </TableCell>
                                 <TableCell align="center">Valor</TableCell>
                                 <TableCell align="center">Espécie</TableCell>
-                                <TableCell align="center">Opções</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -758,24 +749,6 @@ const FormularioContratos = () => {
                                   <TableCell align="center">
                                     {dependente.especie}
                                   </TableCell>
-                                  <TableCell align="center">
-                                    <div className="botao-opcao">
-                                      <div className="edit-botao">
-                                        <button>
-                                          <ModeEditOutlineIcon
-                                            fontSize={"small"}
-                                          />
-                                        </button>
-                                      </div>
-                                      <div className="delete-botao">
-                                        <button>
-                                          <DeleteForeverIcon
-                                            fontSize={"small"}
-                                          />
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
@@ -799,9 +772,7 @@ const FormularioContratos = () => {
                                     <PostAddIcon fontSize={"large"} />
                                   </a>
 
-                                  <button onClick={handleOpen}>
-                                    VISUALIZAR
-                                  </button>
+                                  <button>VISUALIZAR</button>
                                   <Modal
                                     open={open}
                                     onClose={handleClose}
@@ -814,12 +785,7 @@ const FormularioContratos = () => {
                                         variant="h6"
                                         component="h2"
                                       >
-                                        <div className="fecha-pdf-contrato">
-                                          <button onClick={handleClose}><HighlightOffIcon fontSize={'small'}/></button>
-                                        </div>
-                                      </Typography>
-                                      <Typography>
-                                      <div className="documento-anexo">
+                                        <div className="documento-anexo">
                                           <img src={Documento}></img>
                                         </div>
                                       </Typography>
@@ -865,18 +831,12 @@ const FormularioContratos = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="salva-anexo-formulario">
-                        <button>SALVAR</button>
-                      </div>
+
                     </div>
                   </div>
                 )}
               </div>
-              <div className="formulario-contratos-contratos">
-                <ConfirmacaoContratos mostrarBotoes={mostrarBotoes} />
-              </div>
             </div>
-            <ToastContainer />
           </div>
         )}
       </div>
@@ -884,4 +844,4 @@ const FormularioContratos = () => {
   );
 };
 
-export default FormularioContratos;
+export default FormularioContratosFinalizados;
