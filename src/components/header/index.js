@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import './header.css'
+import idiomas from '../../utils/info';
 
 
-const HeaderVendas = () => {
+const HeaderVendas = ({ idioma }) => {
   const [activeRoute, setActiveRoute] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,19 +35,19 @@ const HeaderVendas = () => {
         onClick={() => handleMenuClick("/contratos")}
         className={activeRoute === "/contratos" ? "active" : ""}
       >
-        Contratos Pendentes
+        {idioma ? idiomas.es_PY.header.contratoPendente : idiomas.pt_BR.header.contratoPendente}
       </button>
       <button
         onClick={() => handleMenuClick("/contratos-finalizados")}
         className={activeRoute === "/contratos-finalizados" ? "active" : ""}
       >
-        Contratos Finalizados
+        {idioma ? idiomas.es_PY.header.contratoFinalizado : idiomas.pt_BR.header.contratoFinalizado}
       </button>
       <button
         onClick={() => handleMenuClick("/cadastro")}
         className={activeRoute === "/cadastro" ? "active" : ""}
       >
-        Cadastro
+        {idioma ? idiomas.es_PY.header.cadastro : idiomas.pt_BR.header.cadastro}
       </button>
     </div>
   );
