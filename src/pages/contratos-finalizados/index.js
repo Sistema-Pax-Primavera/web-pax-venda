@@ -14,63 +14,56 @@ import Formulario from '../../components/formulario';
 import FormularioConfirmacao from '../../components/formulario-confirmacao';
 import FormularioContratosFinalizados from '../../components/formulario-finalizado';
 import '../../components/formulario-finalizado/formulario-finalizados.css';
+import { headerVendas } from '../../entities/headers/header-vendas';
+import { useNavigate } from 'react-router-dom';
+import TableComponent from '../../components/table/table';
+import { useWebVendedor } from '../../services/api';
 
 
 const ContratosFinalizados = () => {
-  function createData(id, titular, vendedor, unidade, data, tipo, status) {
-    return { id, titular, vendedor, unidade, data, tipo, status };
-  }
+  const [vendasFinalizadas, setVendasFinalizadas] = useState([]);
+  const { getContratos } = useWebVendedor();
+  const navigate = useNavigate();
 
-  const rows = [
-    createData(1, 'Carlos Henrique', 'Sonia Souza', 'Dourados', '02/05/2024', 'Contrato Novo', 'Cadastrado'),
-    createData(2, 'Luiza Bitencur', 'Zacarias Juventude', 'Dourados', '03/05/2024', 'Contrato Novo', 'Recusado'),
-    createData(3, 'Felipe Alencar', 'Luzia Souza', 'Rio Brilhante', '04/05/2024', 'Contrato Novo', 'Cadastro')
-  ];
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [showTable, setShowTable] = useState(false);
-  const [showLoading, setShowLoading] = useState(true);
+  const handlePesquisar = () => {
 
-  const [showFormulario, setShowFormulario] = useState(false);
-  const [contratoSelecionado, setContratoSelecionado] = useState(null);
+  };
 
   const handleOpenFormulario = (contrato) => {
-    setContratoSelecionado(contrato);
-    setShowTable(false);
-    setShowFormulario(true);
-  };
-
-  const handleCloseFormulario = () => {
-    setShowFormulario(false);
-    setContratoSelecionado(null);
-  };
-
-  const handleSearch = () => {
-    setShowTable(false); // Ocultar a tabela
-    setTimeout(() => {
-      const filteredResults = rows.filter(row =>
-        row.titular.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-
-      setSearchResults(filteredResults);
-      setShowLoading(false); // Ocultar o componente de carregamento
-      setShowTable(true); // Mostrar a tabela após 3 segundos
-    }, 3000); // Definir um atraso de 3 segundos
+    navigate('/contratos-finalizados/contrato-finalizado', { state: { contrato } })
+    localStorage.setItem('page-venda', '/contratos-finalizados/contrato-finalizado');
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setShowLoading(false);
-      setShowTable(true);
-    }, 5000);
+    getContratos().then((data) => {
+      if (data) {
+        // Filtra os contratos com status 'Finalizado'
+        const contratosFinalizados = data.filter((contrato) => contrato.status === 'Finalizado');
+        setVendasFinalizadas(contratosFinalizados);
+      }
+    });
   }, []);
 
   return (
     <div className='container-contratos-vendas'>
       <HeaderVendas />
+
       <div className='clientes-contrato-venda8'>
-        <FormularioContratosFinalizados />
+        <div className="pesquisa-contrato-venda">
+          <input
+            placeholder="Informe o nome do cliente"
+            value={''}
+            onChange={''}
+          />
+          <button onClick={handlePesquisar}>PESQUISAR</button>
+        </div>
+        <div className="tabela-contratos-vendas">
+          <TableComponent headers={headerVendas} rows={vendasFinalizadas} actionsLabel={["Ações", "Acciones"]} actionCalls={{
+            view: (e) => handleOpenFormulario(e)
+          }} />
+        </div>
       </div>
+
     </div>
   );
 }

@@ -30,6 +30,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
 import './formulario-finalizados.css';
+import { useNavigate } from "react-router-dom";
+import { useWebVendedor } from "../../services/api";
 
 const style = {
   position: "absolute",
@@ -49,45 +51,6 @@ function createData(id, nome, vendedor, unidade, data, tipo, status) {
   return { id, nome, vendedor, unidade, data, tipo, status };
 }
 
-const rows = [
-  createData(
-    1,
-    "Mateus Pitta",
-    "Sonia Souza",
-    "Dourados",
-    "02/05/2024",
-    "Contrato Novo",
-    "Cadastrado"
-  ),
-  createData(
-    2,
-    "Giovane Luna",
-    "Zacarias Juventude",
-    "Dourados",
-    "03/05/2024",
-    "Contrato Novo",
-    "Cadastrado"
-  ),
-  createData(
-    3,
-    "Diogo Perez",
-    "Luzia Souza",
-    "Rio Brilhante",
-    "04/05/2024",
-    "Contrato Novo",
-    "Recusado"
-  ),
-  createData(
-    3,
-    "Marcos Lopes",
-    "Luzia Souza",
-    "Rio Brilhante",
-    "04/05/2024",
-    "Contrato Novo",
-    "Cadastrado"
-  ),
-];
-
 function cliente(name, filiacao, carencia, falecimento, valor, especie) {
   return { name, filiacao, carencia, falecimento, valor, especie };
 }
@@ -96,12 +59,11 @@ const dependentes = [
   cliente("Tor", "15/01/2023", "15/01/2025", "00/00/0000", "100,00", "Gator"),
 ];
 
-const FormularioContratosFinalizados = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+const FormularioContratosFinalizados = ({ cliente }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [showTable, setShowTable] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(true);
   const [contratoSelecionado, setContratoSelecionado] = useState(null);
   const [showFormulario, setShowFormulario] = useState(false);
   const [mostrarFormularioGerais, setMostrarFormularioGerais] = useState(true);
@@ -120,6 +82,9 @@ const FormularioContratosFinalizados = () => {
     useState(false);
   const [visualizarClicado, setVisualizarClicado] = useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
+
+  const { getContrato } = useWebVendedor();
+  const [contrato, setContrato] = useState([]);
 
   const handleOpen = () => {
     setMostrarBotoes(true);
@@ -161,113 +126,37 @@ const FormularioContratosFinalizados = () => {
     setCarenciaAtivada(!carenciaAtivada);
   };
 
-  const handleSearch = () => {
-    setShowTable(false); // Ocultar a tabela
-    setShowLoading(true);
-
-    setTimeout(() => {
-      const filteredResults = rows.filter((row) =>
-        row.nome.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-
-      setSearchResults(filteredResults);
-      setShowLoading(false); // Ocultar o componente de carregamento
-      setShowTable(true); // Mostrar a tabela após 3 segundos
-    }, 3000); // Definir um atraso de 3 segundos
-  };
-
-  const handleOpenFormulario = (contrato) => {
-    setContratoSelecionado(contrato);
-    setShowTable(false);
-    setShowLoading(false);
-    setShowFormulario(true);
-  };
-
   const handleCloseFormulario = () => {
-    setMostrarBotoes(false); // Esconde os botões de confirmação
-    setShowFormulario(false);
-    setContratoSelecionado(null);
-    setShowTable(true);
+    navigate('/contratos-finalizados',)
+    localStorage.setItem('page-venda', '/contratos-finalizados');
   };
 
   useEffect(() => {
     setFormularioAtivo("humano")
-    console.log(formularioAtivo)
   }, []);
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setShowLoading(false);
+      getContrato().then((data) => {
+        setContrato(data)
+      });
+      setShowFormulario(true);
+    }, 3000);
+  }, []);
+
 
   return (
     <div className="container-contratos-vendas1">
       <div className="clientes-contrato-venda1">
-        {!showFormulario && (
-          <div className="pesquisa-contrato-venda">
-            <input
-              placeholder="Informe o nome do cliente"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch}>PESQUISAR</button>
-          </div>
-        )}
-        {!showLoading && !showTable && !showFormulario && (
-          <div className="imagem-pesquisa">
-            <img src={Pesquisa} alt="Ícone de pesquisa" />
-          </div>
-        )}
+
         {showLoading && (
           <div className="carregando-projetos">
             <Carregando />
           </div>
         )}{" "}
-        {/* Renderizar o componente de carregamento se showLoading for verdadeiro */}
-        {showTable && (
-          <div className="tabela-contratos-vendas">
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Titular</TableCell>
-                    <TableCell align="left">Vendedor</TableCell>
-                    <TableCell align="left">Unidade</TableCell>
-                    <TableCell align="left">Data</TableCell>
-                    <TableCell align="left">Tipo</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">Opções</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {searchResults.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.nome}
-                      </TableCell>
-                      <TableCell align="left">{row.vendedor}</TableCell>
-                      <TableCell align="left">{row.unidade}</TableCell>
-                      <TableCell align="left">{row.data}</TableCell>
-                      <TableCell align="left">{row.tipo}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
-                      <TableCell align="center">
-                        <div className="abrir-contrato">
-                          <button onClick={() => handleOpenFormulario(row)}>
-                            ABRIR
-                          </button>
-                          {row.status === "Recusado" ?
-                            <button onClick={() => handleOpenFormulario(row)}>
-                              REENVIAR
-                            </button>
-                            : <></>}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        )}
-        {showFormulario && contratoSelecionado && (
+        {showFormulario && (
           <div className="avanca-form-volta4">
             <div className="button-retorn">
               <button onClick={handleCloseFormulario}>
