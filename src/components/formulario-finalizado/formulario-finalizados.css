@@ -40,3 +40,31 @@ button-pet-humano button-active  {
     gap: 10px;
     width: 75%;
 }
+
+.campos-legenda-contrato9 {
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--branco);
+}
+
+.legenda-cremacao-contrato-finalizado2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.campos-02-contrato select{
+    font-weight: 500;
+    color: black;
+}
+
+.rg-contrato select{
+    font-weight: 500;
+    color: black;
+}
+
+.campos-04-contrato input{
+    font-weight: 500;
+}

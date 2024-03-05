@@ -1,5 +1,6 @@
 
-import { VendaFinalizada, Vendas } from '../entities/class/vendas';
+import { VendaFinalizada } from '../entities/class/vendaFinalizada';
+import { Vendas } from '../entities/class/vendas';
 import httpsInstance from './url';
 
 export const useWebVendedor = () => {
@@ -22,11 +23,21 @@ export const useWebVendedor = () => {
         }
     };
 
-    const getContrato = async () =>
-        https.get("/a467a1ee-fdae-4e9e-96ec-564b4299cbb2")
-            .then(({ data }) =>
-                VendaFinalizada(data)
-            );
+    const getContrato = async () => {
+          try {
+            const response = await https.get("/87f04950-b539-4745-9b1d-119b972bf4c9")
+            const { data } = response;
+
+            if(data){
+                return VendaFinalizada(data)
+            }
+
+            return {}
+        } catch (error) {
+            console.error("Erro ao obter contratos da API:", error);
+            throw error; // ou trate o erro de acordo com suas necessidades
+        }     
+    }
 
     return {
         getContratos,

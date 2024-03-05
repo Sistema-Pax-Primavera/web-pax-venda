@@ -61,7 +61,7 @@ const TableComponent = ({ headers, rows, actionCalls = {}, actionsLabel }) => {
                 <button
                     key="view"
                     onClick={() => actionCalls.view(row)} >
-                    Abrir
+                    ABRIR
                 </button>
             ),
             promote: (

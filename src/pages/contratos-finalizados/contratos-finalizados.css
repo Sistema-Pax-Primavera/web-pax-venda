@@ -4,6 +4,12 @@
     gap: 5px;
 }
 
+.button-table-cadastro button{
+    color: var(--verde);
+    font-weight: 800;
+    font-size: 12px;
+}
+
 .formulario-cliente{
     display: flex;
     gap: 5px;

@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import HeaderVendas from "../../components/header/index";
 import './contratos-finalizados.css';
-import Pesquisa from '../../../assets/pesquisa.svg';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Carregando from '../../components/carregando';
-import Formulario from '../../components/formulario';
-import FormularioConfirmacao from '../../components/formulario-confirmacao';
-import FormularioContratosFinalizados from '../../components/formulario-finalizado';
 import '../../components/formulario-finalizado/formulario-finalizados.css';
 import { headerVendas } from '../../entities/headers/header-vendas';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +18,7 @@ const ContratosFinalizados = () => {
   };
 
   const handleOpenFormulario = (contrato) => {
-    navigate('/contratos-finalizados/contrato-finalizado', { state: { contrato } })
+    navigate('/contratos-finalizados/contrato-finalizado')
     localStorage.setItem('page-venda', '/contratos-finalizados/contrato-finalizado');
   };
 
@@ -63,7 +51,6 @@ const ContratosFinalizados = () => {
           }} />
         </div>
       </div>
-
     </div>
   );
 }
