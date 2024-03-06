@@ -5,6 +5,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CheckboxWhite from '../../components/checkbox/index'
 import './formulario-confirmacao.css'
+import ButtonText from '../../../../pax-associado/src/components/button-texto/index'
 
 const FormularioConfirmacao = ({ checkboxStatus }) => {
     const [toastMessage, setToastMessage] = useState('');
@@ -66,7 +67,7 @@ const FormularioConfirmacao = ({ checkboxStatus }) => {
                     <label><CheckboxWhite checked={checkboxStatus.anexos} disabled /> Anexos</label>
                 </div>
                 <div className='confirmados-contratos'>
-                    <button onClick={handleCadastrar}>CADASTRAR</button>
+                    <ButtonText title="CADASTRAR" funcao={handleCadastrar}/>
                 </div>
             </div>
 

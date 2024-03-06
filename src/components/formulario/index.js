@@ -24,6 +24,7 @@ import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SaveIcon from "@mui/icons-material/Save";
+import ButtonText from "../../../../pax-associado/src/components/button-texto";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -329,7 +330,7 @@ const Formulario = ({ dadosContrato = {} }) => {
                   </div>
                 )}
                 <div className="salva-dependentes">
-                  <button onClick={handleSalvarClick}>SALVAR</button>
+                  <ButtonText title="SALVAR" funcao={handleSalvarClick} />
                 </div>
               </div>
             </div>
@@ -383,7 +384,10 @@ const Formulario = ({ dadosContrato = {} }) => {
                   <input></input>
                 </div>
                 <div className="salvar-associado-contrato">
-                  <button onClick={handleSalvarResidenciais}>SALVAR</button>
+                  <ButtonText
+                    title="SALVAR"
+                    funcao={handleSalvarResidenciais}
+                  />
                 </div>
               </div>
             </div>
@@ -437,7 +441,7 @@ const Formulario = ({ dadosContrato = {} }) => {
                   <input></input>
                 </div>
                 <div className="salvar-associado-contrato">
-                  <button onClick={handleSalvarComerciais}>SALVAR</button>
+                  <ButtonText title="SALVAR" funcao={handleSalvarComerciais} />
                 </div>
               </div>
             </div>
@@ -482,7 +486,7 @@ const Formulario = ({ dadosContrato = {} }) => {
                   <Switch {...label} size="small" />
                 </div>
                 <div className="salvar-associado-contrato">
-                  <button onClick={handleSalvarCobranca}>SALVAR</button>
+                  <ButtonText title="SALVAR" funcao={handleSalvarCobranca} />
                 </div>
               </div>
             </div>
@@ -530,9 +534,10 @@ const Formulario = ({ dadosContrato = {} }) => {
                         <select></select>
                       </div>
                       <div className="salva-dependentes">
-                        <button onClick={handleSalvarDependentes}>
-                          SALVAR
-                        </button>
+                        <ButtonText
+                          title="SALVAR"
+                          funcao={handleSalvarDependentes}
+                        />
                       </div>
                     </div>
                     <div className="container-linha">
@@ -605,9 +610,10 @@ const Formulario = ({ dadosContrato = {} }) => {
                       </div>
 
                       <div className="salva-dependentes">
-                        <button onClick={handleSalvarDependentes}>
-                          SALVAR
-                        </button>
+                        <ButtonText
+                          title="SALVAR"
+                          funcao={handleSalvarDependentes}
+                        />
                       </div>
                     </div>
                     <div className="container-linha">
@@ -675,7 +681,6 @@ const Formulario = ({ dadosContrato = {} }) => {
                           </TableCell>
                           <TableCell align="center">{row.valor}</TableCell>
                           <TableCell align="center">{row.especie}</TableCell>
-
                         </TableRow>
                       ))}
                     </TableBody>
@@ -699,7 +704,10 @@ const Formulario = ({ dadosContrato = {} }) => {
                             <PostAddIcon fontSize={"large"} />
                           </a>
                           <input type="file" onChange={handleProcurarChange} />
-                          <button onClick={handleAnexarClick}>ANEXAR</button>
+                          <ButtonText
+                            title="ANEXAR"
+                            funcao={handleAnexarClick}
+                          />
                         </div>
                       </div>
 
@@ -718,11 +726,10 @@ const Formulario = ({ dadosContrato = {} }) => {
                                   </button>
                                 </div>
                                 <div className="baixa-contrato">
-                                  <button
-                                    onClick={() => handleDownloadClick(arquivo)}
-                                  >
-                                    <DownloadIcon fontSize={"small"} />
-                                  </button>
+                                  <ButtonIcon
+                                    funcao={() => handleDownloadClick(arquivo)}
+                                    icon={<DownloadIcon fontSize={"small"} />}
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -737,7 +744,7 @@ const Formulario = ({ dadosContrato = {} }) => {
                 </div>
               </div>
               <div className="salva-anexo-formulario">
-                <button onClick={handleSalvarAnexo}>SALVAR</button>
+                <ButtonText title="SALVAR" funcao={handleSalvarAnexo} />
               </div>
             </div>
           </div>

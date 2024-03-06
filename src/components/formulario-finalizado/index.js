@@ -28,6 +28,7 @@ import "./formulario-finalizados.css";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useWebVendedor } from "../../services/api";
+import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 
 const style = {
   position: "absolute",
@@ -184,9 +185,7 @@ const FormularioContratosFinalizados = ({ }) => {
         {showFormulario && (
           <div className="avanca-form-volta4">
             <div className="button-retorn">
-              <button onClick={handleCloseFormulario}>
-                <ArrowBackIosNewIcon fontSize={"small"} /> RETORNAR
-              </button>
+              <IconeButtonTable title="RETORNAR" funcao={handleCloseFormulario} icon={ <ArrowBackIosNewIcon fontSize={"small"} />}/>
             </div>
             <div className="container-contrato-cards">
               <div className="formulario-confirma-finalizados">

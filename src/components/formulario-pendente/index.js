@@ -33,6 +33,7 @@ import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useNavigate } from "react-router-dom";
+import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 
 const style = {
   position: "absolute",
@@ -156,9 +157,7 @@ const FormularioContratos = () => {
         {showFormulario && (
           <div className="avanca-form-volta">
             <div className="button-retorn">
-              <button onClick={handleCloseFormulario}>
-                <ArrowBackIosNewIcon fontSize={"small"} /> RETORNAR
-              </button>
+              <IconeButtonTable icon={<ArrowBackIosNewIcon fontSize={"small"} />} title="RETORNAR" funcao={handleCloseFormulario}/>
             </div>
             <div className="container-contrato-cards">
               <div className="formulario-confirma-cadastros">

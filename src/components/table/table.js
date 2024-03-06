@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import '../../pages/vendas.css';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ButtonText from "../../../../pax-associado/src/components/button-texto";
 
 const TableComponent = ({ headers, rows, actionCalls = {}, actionsLabel }) => {
     const [orderedBy, setOrderedBy] = useState(null)
@@ -58,18 +59,18 @@ const TableComponent = ({ headers, rows, actionCalls = {}, actionsLabel }) => {
                 </div>
             ),
             view: (
-                <button
+                <ButtonText
+                    funcao={() => actionCalls.view(row)} 
                     key="view"
-                    onClick={() => actionCalls.view(row)} >
-                    ABRIR
-                </button>
+                    title="ABRIR"
+                />
             ),
             promote: (
-                <button
-                    key="promote"
-                    onClick={() => actionCalls.promote(row)} >
-                    Promover
-                </button>
+                <ButtonText
+                funcao={() => actionCalls.promote(row)} 
+                key="view"
+                title="PROMOVER"
+            />
             )
         }
 

@@ -66,7 +66,8 @@
 
 .pesquisa-contrato-venda{
     width: 100%;
-    gap: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .carregando-projetos{
@@ -83,6 +84,7 @@
     padding: 10px;
 }
 
+
 .pesquisa-contrato-venda button{
     margin-left: 5px;
     padding-left: 20px;
@@ -91,6 +93,7 @@
     color: var(--branco);
     font-weight: 800;
     padding: 10px;
+    width: 20%;
     cursor: pointer;
 }
 
