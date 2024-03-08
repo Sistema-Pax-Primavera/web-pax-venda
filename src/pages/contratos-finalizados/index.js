@@ -7,14 +7,41 @@ import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/table/table";
 import { useWebVendedor } from "../../services/api";
 import ButtonText from "../../../../pax-associado/src/components/button-texto";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ContratosFinalizados = () => {
   const [vendasFinalizadas, setVendasFinalizadas] = useState([]);
-  const { getContratos } = useWebVendedor();
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+  const [clientes, setClientes] = useState([]);
+  const { getContratos } = useWebVendedor();
 
-  const handlePesquisar = () => {};
-
+  const handleSearch = () => {
+    setLoading(true);
+    if (!searchTerm) {
+      getContratos().then((data) =>{
+        const finalizados = data.filter(contrato => contrato.status === "Finalizado");
+        setSearchResult(finalizados);
+        setLoading(false);
+      });
+    } else {
+      getContratos().then((data) => {
+        const finalizadosFiltrados = data.filter(contrato =>
+          contrato.status === "Finalizado" &&
+          contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResult(finalizadosFiltrados);
+        setLoading(false);
+      });
+    }
+  };
+  
+  
+  
+  
   const handleOpenFormulario = (contrato) => {
     navigate("/contratos-finalizados/contrato-finalizado");
     localStorage.setItem(
@@ -43,17 +70,17 @@ const ContratosFinalizados = () => {
         <div className="pesquisa-contrato-venda">
           <input
             placeholder="Informe o nome do cliente"
-            value={""}
-            onChange={""}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="pesquisa-contrato-button">
-            <ButtonText title="PESQUISAR" funcao={handlePesquisar} />
+            <ButtonText title="PESQUISAR" funcao={() => handleSearch()} />
           </div>
         </div>
         <div className="tabela-contratos-vendas">
           <TableComponent
             headers={headerVendas}
-            rows={vendasFinalizadas}
+            rows={searchResult}
             actionsLabel={["Ações", "Acciones"]}
             actionCalls={{
               view: (e) => handleOpenFormulario(e),

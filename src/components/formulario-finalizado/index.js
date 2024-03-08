@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Pesquisa from "../../../assets/pesquisa.svg";
 import PersonIcon from "@mui/icons-material/Person";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Switch from "@mui/material/Switch";
-import PetsIcon from "@mui/icons-material/Pets";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -13,8 +11,6 @@ import Carregando from "../carregando";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Paper from "@mui/material/Paper";
 import PostAddIcon from "@mui/icons-material/PostAdd";
-import { saveAs } from "file-saver";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
@@ -64,7 +60,6 @@ const FormularioContratosFinalizados = ({ }) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [nacionalidade, setNacionalidade] = useState(true);
-  const [showTable, setShowTable] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
   const [contratoSelecionado, setContratoSelecionado] = useState(null);
   const [showFormulario, setShowFormulario] = useState(false);
@@ -79,12 +74,10 @@ const FormularioContratosFinalizados = ({ }) => {
   const [mostrarFormularioResidenciais, setMostrarFormularioResidenciais] =
     useState(false);
   const [arquivos, setArquivos] = useState([]);
-  const [arquivoSelecionado, setArquivoSelecionado] = useState(null);
   const [mostrarFormularioComerciais, setMostrarFormularioComerciais] =
     useState(false);
-  const [visualizarClicado, setVisualizarClicado] = useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
-  const { getContrato } = useWebVendedor();
+  const { getContratos } = useWebVendedor();
 
   const handleOpen = () => {
     setMostrarBotoes(true);
@@ -166,7 +159,7 @@ const FormularioContratosFinalizados = ({ }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      getContrato().then((data) => {
+      getContratos().then((data) => {
         setCliente(data);
       });
       setShowLoading(false);

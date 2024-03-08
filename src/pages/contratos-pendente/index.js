@@ -11,10 +11,34 @@ import ButtonText from "../../../../pax-associado/src/components/button-texto/in
 
 const Contratos = () => {
   const [vendas, setVendas] = useState([]);
-  const { getContratos } = useWebVendedor();
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { getContratos } = useWebVendedor();
+  const [clientes, setClientes] = useState([]);
 
-  const handlePesquisar = () => {};
+  const handleSearch = () => {
+    setLoading(true);
+    if (!searchTerm) {
+      getContratos().then((data) =>{
+        const pendentes = data.filter(contrato => contrato.status === "Pendente");
+        setSearchResult(pendentes);
+        setLoading(false);
+      });
+    } else {
+      getContratos().then((data) => {
+        const pendentesFiltrados = data.filter(contrato =>
+          contrato.status === "Pendente" &&
+          contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResult(pendentesFiltrados);
+        setLoading(false);
+      });
+    }
+  };
+  
+  
 
   const handleOpenFormulario = (contrato) => {
     navigate("/contratos/contratos-pendentes", { state: { contrato } });
@@ -38,19 +62,19 @@ const Contratos = () => {
       <HeaderVendas />
       <div className="clientes-contrato-venda8">
         <div className="pesquisa-contrato-venda">
-          <input
+        <input
             placeholder="Informe o nome do cliente"
-            value={""}
-            onChange={""}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="pesquisa-contrato-button">
-            <ButtonText title="PESQUISAR" funcao={handlePesquisar} />
+          <ButtonText title="PESQUISAR" funcao={() => handleSearch()} />
           </div>
         </div>
         <div className="tabela-contratos-vendas">
           <TableComponent
             headers={headerVendas}
-            rows={vendas}
+            rows={searchResult}
             actionsLabel={["Ações", "Acciones"]}
             actionCalls={{
               view: (e) => handleOpenFormulario(e),

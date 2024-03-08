@@ -33,6 +33,8 @@ import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useWebVendedor } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 
 const style = {
@@ -59,6 +61,9 @@ const dependentes = [
 ];
 
 const FormularioContratos = () => {
+  const [cliente, setCliente] = useState([]);
+  const location = useLocation();
+  const { getContratos } = useWebVendedor();
   const [open, setOpen] = React.useState(false);
   const [showFormulario, setShowFormulario] = useState(false);
   const [mostrarFormularioGerais, setMostrarFormularioGerais] = useState(true);
@@ -140,6 +145,9 @@ const FormularioContratos = () => {
 
   useEffect(() => {
     setTimeout(() => {
+      getContratos().then((data) => {
+        setCliente(data);
+      });
       setShowLoading(false);
       setShowFormulario(true);
     }, 3000);
@@ -203,7 +211,7 @@ const FormularioContratos = () => {
                       <div className="container-linha">
                         <div className="campos-01-contrato">
                           <label>Nome</label>
-                          <input />
+                          <input value={clientes.nome}/>
                         </div>
                         <div className="campos-02-contrato">
                           <label>CPF</label>
