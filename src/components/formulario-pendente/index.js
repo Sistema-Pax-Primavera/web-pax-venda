@@ -211,7 +211,7 @@ const FormularioContratos = () => {
                       <div className="container-linha">
                         <div className="campos-01-contrato">
                           <label>Nome</label>
-                          <input value={clientes.nome}/>
+                          <input />
                         </div>
                         <div className="campos-02-contrato">
                           <label>CPF</label>

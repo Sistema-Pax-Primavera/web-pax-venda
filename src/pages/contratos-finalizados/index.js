@@ -9,58 +9,58 @@ import { useWebVendedor } from "../../services/api";
 import ButtonText from "../../../../pax-associado/src/components/button-texto";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Carregando from "../../components/carregando";
 
 const ContratosFinalizados = () => {
   const [vendasFinalizadas, setVendasFinalizadas] = useState([]);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Alterado para false inicialmente
   const [searchResult, setSearchResult] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const { getContratos } = useWebVendedor();
 
   const handleSearch = () => {
-    setLoading(true);
-    if (!searchTerm) {
-      getContratos().then((data) =>{
-        const finalizados = data.filter(contrato => contrato.status === "Finalizado");
-        setSearchResult(finalizados);
-        setLoading(false);
-      });
-    } else {
-      getContratos().then((data) => {
-        const finalizadosFiltrados = data.filter(contrato =>
-          contrato.status === "Finalizado" &&
-          contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setSearchResult(finalizadosFiltrados);
-        setLoading(false);
-      });
-    }
-  };
-  
-  
-  
-  
-  const handleOpenFormulario = (contrato) => {
-    navigate("/contratos-finalizados/contrato-finalizado");
-    localStorage.setItem(
-      "page-venda",
-      "/contratos-finalizados/contrato-finalizado"
-    );
+    setLoading(true); // Ativa o componente de carregamento
+
+    setTimeout(() => {
+      if (!searchTerm) {
+        getContratos().then((data) => {
+          const finalizados = data.filter(
+            (contrato) => contrato.status === "Finalizado"
+          );
+          setSearchResult(finalizados);
+          setLoading(false); // Desativa o componente de carregamento
+        });
+      } else {
+        getContratos().then((data) => {
+          const finalizadosFiltrados = data.filter(
+            (contrato) =>
+              contrato.status === "Finalizado" &&
+              contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          setSearchResult(finalizadosFiltrados);
+          setLoading(false); // Desativa o componente de carregamento
+        });
+      }
+    }, 3000); // Atraso de 3 segundos
   };
 
   useEffect(() => {
-    getContratos().then((data) => {
-      if (data) {
-        // Filtra os contratos com status 'Finalizado'
-        const contratosFinalizados = data.filter(
-          (contrato) => contrato.status === "Finalizado"
-        );
-        setVendasFinalizadas(contratosFinalizados);
-      }
-    });
-  }, []);
+    if (!initialDataLoaded) {
+      getContratos().then((data) => {
+        if (data) {
+          const contratosFinalizados = data.filter(
+            (contrato) => contrato.status === "Finalizado"
+          );
+          setVendasFinalizadas(contratosFinalizados);
+          setSearchResult(contratosFinalizados);
+          setInitialDataLoaded(true);
+        }
+      });
+    }
+  }, [initialDataLoaded, getContratos]);
 
   return (
     <div className="container-contratos-vendas">
@@ -78,14 +78,18 @@ const ContratosFinalizados = () => {
           </div>
         </div>
         <div className="tabela-contratos-vendas">
-          <TableComponent
-            headers={headerVendas}
-            rows={searchResult}
-            actionsLabel={["Ações", "Acciones"]}
-            actionCalls={{
-              view: (e) => handleOpenFormulario(e),
-            }}
-          />
+          {loading ? (
+            <Carregando />
+          ) : (
+            <TableComponent
+              headers={headerVendas}
+              rows={searchResult}
+              actionsLabel={["Ações", "Acciones"]}
+              actionCalls={{
+                view: (e) => handleOpenFormulario(e),
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
