@@ -6,7 +6,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMostrarBotoesConfirmacao, onOpenModal }) => {
+const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMostrarBotoesConfirmacao, onOpenModal, data, tipo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
@@ -18,17 +18,16 @@ const ConfirmacaoContratos = ({ mostrarBotoes, mostrarBotoesConfirmacao, setMost
                     <div className='separacao-contrato'>
                         <ArticleIcon fontSize={'small'} />
                         <div className='tipo-contrato-novo'>
-                            <label>Contrato Novo</label>
                             <label>Tipo</label>
+                            <label>{tipo}</label>
                         </div>
                     </div>
 
                     <div className='separacao-contrato'>
                         <CalendarMonthIcon fontSize={'small'} />
                         <div className='tipo-contrato-novo'>
-                            <label>22/05/2024</label>
-
                             <label>Data Contrato</label>
+                            <label>{data}</label>
                         </div>
                     </div>
                 </div>

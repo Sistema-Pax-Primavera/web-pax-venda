@@ -9,52 +9,59 @@ import { useWebVendedor } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import ButtonText from "../../../../pax-associado/src/components/button-texto/index";
 import Carregando from "../../components/carregando";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Contratos = () => {
   const [vendas, setVendas] = useState([]);
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
-  const { getContratos } = useWebVendedor();
-  const [clientes, setClientes] = useState([]);
+  const { getContratos, getContratoBusca } = useWebVendedor();
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleSearch = () => {
-    setLoading(true); // Exibe o componente de carregamento
+  const handleSearch = async () => {
+    try {
+      if (!searchTerm) {
+        setLoading(true);
+        const response = await getContratos();
+        setSearchResult(response);
+        setTimeout(() => setLoading(false), 3000);
+      } else {
+        const contratoFiltrado = searchResult.filter(contrato => {
+          return contrato.nome_vendedor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contrato.titular.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        setSearchResult(contratoFiltrado);
+        setTimeout(() => setLoading(false), 3000);
+      }
+    } catch (error) {
+      console.log('cai aqui')
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.message);
+      } else if (error.message === "Network Error") {
+        toast.error("Erro de conexão. Por favor, verifique sua conexão com a internet e tente novamente.");
+      } else {
+        toast.error("Erro ao realizar a busca. Por favor, tente novamente mais tarde.");
 
-    if (!searchTerm) {
-      getContratos().then((data) => {
-        const pendentes = data.filter((contrato) => contrato.status === "Pendente");
-        setSearchResult(pendentes);
-        setTimeout(() => setLoading(false), 3000); // Oculta o componente de carregamento após 3 segundos
-      });
-    } else {
-      getContratos().then((data) => {
-        const pendentesFiltrados = data.filter(
-          (contrato) =>
-            contrato.status === "Pendente" &&
-            contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setSearchResult(pendentesFiltrados);
-        setTimeout(() => setLoading(false), 3000); // Oculta o componente de carregamento após 3 segundos
-      });
+        setErrorMessage(error.message);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleOpenFormulario = (contrato) => {
-    navigate("/contratos/contratos-pendentes", { state: { contrato } });
+    //navigate("/contratos/contratos-pendentes", { state: { contrato } });
+    //id fixado para teste
+    contrato = 1;
+    navigate("/contratos/contratos-pendentes", { state: contrato });
     localStorage.setItem("page-venda", "/contratos-pendentes");
   };
 
   useEffect(() => {
     getContratos().then((data) => {
-      if (data) {
-        // Filtra os contratos com status 'Pendente'
-        const contratosPendentes = data.filter(
-          (contrato) => contrato.status === "Pendente"
-        );
-        setSearchResult(contratosPendentes);
-      }
+      setSearchResult(data);
     });
   }, []);
 
@@ -64,7 +71,7 @@ const Contratos = () => {
       <div className="clientes-contrato-venda8">
         <div className="pesquisa-contrato-venda">
           <input
-            placeholder="Informe o nome do cliente"
+            placeholder="Informe o nome do titular ou vendedor"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -87,6 +94,7 @@ const Contratos = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

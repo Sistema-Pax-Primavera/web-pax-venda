@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useWebVendedor } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
+import { converterData } from "../../utils/fuctions";
 
 const style = {
   position: "absolute",
@@ -61,16 +62,17 @@ const dependentes = [
 ];
 
 const FormularioContratos = () => {
-  const [cliente, setCliente] = useState([]);
+  const [cliente, setCliente] = useState({});
+  const [cremacaoAtivada, setCremacaoAtivada] = useState(cliente.is_cremacao);
+  const [carenciaAtivada, setCarenciaAtivada] = useState(cliente.is_carencia);
   const location = useLocation();
-  const { getContratos } = useWebVendedor();
+  const { getContrato } = useWebVendedor();
   const [open, setOpen] = React.useState(false);
   const [showFormulario, setShowFormulario] = useState(false);
   const [mostrarFormularioGerais, setMostrarFormularioGerais] = useState(true);
   const [mostrarFormularioCobranca, setMostrarFormularioCobranca] =
     useState(false);
-  const [cremacaoAtivada, setCremacaoAtivada] = useState(false);
-  const [carenciaAtivada, setCarenciaAtivada] = useState(false);
+
   const [mostrarFormularioDependentes, setMostrarFormularioDependentes] =
     useState(false);
   const [mostrarFormularioAnexos, setMostrarFormularioAnexos] = useState(false);
@@ -128,6 +130,7 @@ const FormularioContratos = () => {
   };
 
   const handleSwitchChange = () => {
+    console.log(cremacaoAtivada)
     // Atualiza o estado do switch
     setCremacaoAtivada(!cremacaoAtivada);
   };
@@ -137,6 +140,10 @@ const FormularioContratos = () => {
     setCarenciaAtivada(!carenciaAtivada);
   };
 
+  const handleNacionalidade = (event) => {
+    setNacionalidade(JSON.parse(event.target.value));
+  };
+
 
   const handleCloseFormulario = () => {
     navigate('/contratos',)
@@ -144,9 +151,12 @@ const FormularioContratos = () => {
   };
 
   useEffect(() => {
+    const contratoId = location.state;
     setTimeout(() => {
-      getContratos().then((data) => {
-        setCliente(data);
+      getContrato(contratoId).then((data) => {
+        setCliente(data[0]);
+        setCremacaoAtivada(data[0].is_carencia)
+        setCremacaoAtivada(data[0].is_cremacao)
       });
       setShowLoading(false);
       setShowFormulario(true);
@@ -165,7 +175,7 @@ const FormularioContratos = () => {
         {showFormulario && (
           <div className="avanca-form-volta">
             <div className="button-retorn">
-              <IconeButtonTable icon={<ArrowBackIosNewIcon fontSize={"small"} />} title="RETORNAR" funcao={handleCloseFormulario}/>
+              <IconeButtonTable icon={<ArrowBackIosNewIcon fontSize={"small"} />} title="RETORNAR" funcao={handleCloseFormulario} />
             </div>
             <div className="container-contrato-cards">
               <div className="formulario-confirma-cadastros">
@@ -211,55 +221,80 @@ const FormularioContratos = () => {
                       <div className="container-linha">
                         <div className="campos-01-contrato">
                           <label>Nome</label>
-                          <input />
+                          <input type="text" name="nome" value={cliente.nome} />
                         </div>
                         <div className="campos-02-contrato">
                           <label>CPF</label>
-                          <input />
+                          <input type="text" name="cpf" value={cliente.cpf} />
                         </div>
                         <div className="rg-contrato">
                           <label>RG</label>
-                          <input />
+                          <input type="text" name="rg" value={cliente.rg} />
                         </div>
                         <div className="campos-03-contrato">
                           <label>Contrato</label>
-                          <input></input>
+                          <input type="text" name="contrato" value={cliente.contrato} />
                         </div>
                         <div className="campos-03-contrato">
                           <label>Gênero</label>
-                          <select></select>
+                          <select value={cliente.genero}>
+                            <option value={null}>Selecione uma opção</option>
+                            <option value={'Masculino'}>Masculino</option>
+                            <option value={'Feminino'}>Feminino</option>
+                            <option value={'Nao Binario'}>Não Binario</option>
+                            <option value={'Nao Informado'}>Não Informado</option>
+                          </select>
                         </div>
                       </div>
                       <div className="container-linha">
                         <div className="data-nascimento-contrato">
                           <label>Data Nascimento</label>
-                          <DateMaskInput />
+                          <input type="date" name="data nascimento" value={cliente.data_nascimento} />
                         </div>
                         <div className="campos-02-contrato">
                           <label>Religiao</label>
-                          <select></select>
+                          <select value={cliente.religiao}>
+                            <option value={null}>Selecione uma opção</option>
+                            <option value={cliente.religiao}>{cliente.religiao}</option>
+                          </select>
                         </div>
                         <div className="rg-contrato">
                           <label>UF</label>
-                          <select></select>
+                          <select value={cliente.uf}>
+                            <option value={null}>Selecione uma opção</option>
+                            <option value={'MS'}>Mato Grosso do Sul</option>
+                            <option value={'SP'}>São Paulo</option>
+                            <option value={'PR'}>Parana</option>
+                            <option value={'RJ'}>Rio de Janeiro</option>
+                            <option value={'MT'}>Mato Grosso</option>
+                          </select>
                         </div>
                         <div className="campos-02-contrato">
                           <label>Naturalidade</label>
-                          <input></input>
+                          <input type="text" name="contrato" value={cliente.naturalidade} />
                         </div>
                         <div className="campos-02-contrato">
                           <label>Nacionalidade</label>
-                          <select></select>
+                          <select value={cliente.nacionalidade} onChange={handleNacionalidade}>
+                            <option value={'Brasileiro'}>Brasileiro(a)</option>
+                            <option value={'Estrangueiro'}>Estrangueiro(a)</option>
+                          </select>
                         </div>
                         <div className="campos-02-contrato">
                           <label>Profissão</label>
-                          <select></select>
+                          <select value={cliente.profissao}>
+                            <option value={null}>Selecione uma opção</option>
+                            <option value={cliente.profissao}>{cliente.profissao}</option>
+                          </select>
                         </div>
                       </div>
                       <div className="container-linha">
                         <div className="campos-02-contrato">
                           <label> Estado Civil</label>
-                          <select />
+                          <select value={cliente.estado_civil}>
+                            <option value={null}>Selecione uma opção</option>
+                            <option value={cliente.estado_civil}>{cliente.estado_civil}</option>
+                          </select>
                         </div>
                         <div className="campos-02-contrato">
                           <label>Carência Padrão</label>
@@ -273,11 +308,11 @@ const FormularioContratos = () => {
                           <>
                             <div className="campos-04-contrato">
                               <label>Data Inicio Carência</label>
-                              <DateMaskInput />
+                              <input type="date" name="dataInicioCarencia" value={cliente.data_inicio_carencia} />
                             </div>
                             <div className="campos-04-contrato">
                               <label>Data Final Carência</label>
-                              <DateMaskInput />
+                              <input type="date" name="dataFimCarencia" value={cliente.data_final_carencia} />
                             </div>
                           </>
                         )}
@@ -292,7 +327,7 @@ const FormularioContratos = () => {
                         {cremacaoAtivada && (
                           <div className="campos-02-contrato">
                             <label>Data da Cremação</label>
-                            <DateMaskInput />
+                            <input type="date" name="dataCremacao" value={cliente.data_cremacao} />
                           </div>
                         )}
 
@@ -744,7 +779,7 @@ const FormularioContratos = () => {
                 )}
               </div>
               <div className="formulario-contratos-contratos">
-                <ConfirmacaoContratos mostrarBotoes={mostrarBotoes} onOpenModal={handleOpenModal} />
+                <ConfirmacaoContratos tipo={'Contrato Novo'} data={converterData(cliente.data_contrato)} mostrarBotoes={mostrarBotoes} onOpenModal={handleOpenModal} />
               </div>
               {isModalOpen && (
                 <Modal onClose={handleCloseModal}>

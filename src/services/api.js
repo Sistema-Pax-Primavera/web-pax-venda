@@ -1,5 +1,5 @@
 
-import { VendaFinalizada } from '../entities/class/vendaFinalizada';
+import { Contrato } from '../entities/class/contrato';
 import { Vendas } from '../entities/class/vendas';
 import httpsInstance from './url';
 
@@ -7,40 +7,48 @@ export const useWebVendedor = () => {
     const https = httpsInstance()
 
     const getContratos = async () => {
+        const response = await https.get("/contratos");
+        const { data } = response;
+        return data.map((item) => Vendas(item));
+    };
+
+    const getContratoBusca = async (value) => {
         try {
-            const response = await https.get("/4dc8a898-efe3-438f-97a9-d700912a25fd");
+            const response = await https.get(`/contratos/busca?value=${value}`);
             const { data } = response;
 
-            if (data && data.contratos) {
-                return data.contratos.map((item) => Vendas(item));
+            if (data) {
+                return data.map((item) => Vendas(item));
+                //return VendaFinalizada(data)
+            }
+            return {}
+        } catch (error) {
+            console.log("Erro ao obter contratos da API:", error);
+            return error;
+        }
+    }
+    const getContrato = async (value) => {
+        try {
+            const response = await https.get(`/contrato?value=${value}`);
+            const { data } = response;
+            if (data) {
+                return data.map((item) => Contrato(item));
+
             } else {
-                console.error("Dados inválidos ou ausentes na resposta da API.");
+                console.log("Dados inválidos ou ausentes na resposta da API.");
                 return null;
             }
         } catch (error) {
             console.error("Erro ao obter contratos da API:", error);
-            throw error; // ou trate o erro de acordo com suas necessidades
+            return error;
         }
-    };
 
-    const getContrato = async () => {
-          try {
-            const response = await https.get("/87f04950-b539-4745-9b1d-119b972bf4c9")
-            const { data } = response;
-
-            if(data){
-                return VendaFinalizada(data)
-            }
-
-            return {}
-        } catch (error) {
-            console.error("Erro ao obter contratos da API:", error);
-            throw error; // ou trate o erro de acordo com suas necessidades
-        }     
     }
+
 
     return {
         getContratos,
+        getContratoBusca,
         getContrato
     }
 }

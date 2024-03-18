@@ -52,8 +52,8 @@ const dependentes = [
   cliente("Tor", "15/01/2023", "15/01/2025", "00/00/0000", "100,00", "Gator"),
 ];
 
-const FormularioContratosFinalizados = ({ }) => {
-  const [cliente, setCliente] = useState([]);
+const FormularioContratosFinalizados = () => {
+  const [cliente, setCliente] = useState({});
   const location = useLocation();
   const [clienteEditado, setClienteEditado] = useState({});
   const [clienteInicial, setClienteInicial] = useState({});
@@ -77,7 +77,7 @@ const FormularioContratosFinalizados = ({ }) => {
   const [mostrarFormularioComerciais, setMostrarFormularioComerciais] =
     useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
-  const { getContratos } = useWebVendedor();
+  const { getContrato } = useWebVendedor();
 
   const handleOpen = () => {
     setMostrarBotoes(true);
@@ -153,14 +153,13 @@ const FormularioContratosFinalizados = ({ }) => {
     setNacionalidade(JSON.parse(event.target.value));
   };
 
-  // useEffect(() => {
-  //   setFormularioAtivo("humano");
-  // }, []);
-
   useEffect(() => {
+    const contratoId = location.state;
     setTimeout(() => {
-      getContratos().then((data) => {
-        setCliente(data);
+      getContrato(contratoId).then((data) => {
+        setCliente(data[0]);
+        setCremacaoAtivada(data[0].is_carencia)
+        setCremacaoAtivada(data[0].is_cremacao)
       });
       setShowLoading(false);
       setShowFormulario(true);
@@ -178,7 +177,7 @@ const FormularioContratosFinalizados = ({ }) => {
         {showFormulario && (
           <div className="avanca-form-volta4">
             <div className="button-retorn">
-              <IconeButtonTable title="RETORNAR" funcao={handleCloseFormulario} icon={ <ArrowBackIosNewIcon fontSize={"small"} />}/>
+              <IconeButtonTable title="RETORNAR" funcao={handleCloseFormulario} icon={<ArrowBackIosNewIcon fontSize={"small"} />} />
             </div>
             <div className="container-contrato-cards">
               <div className="formulario-confirma-finalizados">
@@ -253,7 +252,7 @@ const FormularioContratosFinalizados = ({ }) => {
                       <div className="container-linha">
                         <div className="data-nascimento-contrato">
                           <label>Data Nascimento</label>
-                          <input value={cliente.data_nascimento} disabled />
+                          <input type="date" value={cliente.data_nascimento} disabled />
                         </div>
                         <div className="campos-02-contrato">
                           <label>Religiao</label>
@@ -326,6 +325,7 @@ const FormularioContratosFinalizados = ({ }) => {
                             <div className="campos-04-contrato">
                               <label>Data Inicio Carência</label>
                               <input
+                                type="date"
                                 value={cliente.data_inicio_carencia}
                                 disabled
                               />
@@ -333,6 +333,7 @@ const FormularioContratosFinalizados = ({ }) => {
                             <div className="campos-04-contrato">
                               <label>Data Final Carência</label>
                               <input
+                                type="date"
                                 value={cliente.data_final_carencia}
                                 disabled
                               />
@@ -351,7 +352,7 @@ const FormularioContratosFinalizados = ({ }) => {
                         {cliente.data_cremacao && (
                           <div className="campos-02-contrato">
                             <label>Data da Cremação</label>
-                            <input value={cliente.data_cremacao} disabled />
+                            <input type="date" value={cliente.data_cremacao} disabled />
                           </div>
                         )}
                       </div>
@@ -525,7 +526,7 @@ const FormularioContratosFinalizados = ({ }) => {
                         <div className="campos-02-contrato">
                           <label>Pagar Adesão</label>
                           <Switch
-                            
+
                           />
                         </div>
                       </div>

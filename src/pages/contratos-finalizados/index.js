@@ -19,57 +19,61 @@ const ContratosFinalizados = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const { getContratos } = useWebVendedor();
+  const { getContratos, getContratoBusca } = useWebVendedor();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSearch = () => {
-    setLoading(true); // Ativa o componente de carregamento
-
-    setTimeout(() => {
+    try {
+      setLoading(true);
       if (!searchTerm) {
+        setLoading(true);
         getContratos().then((data) => {
-          const finalizados = data.filter(
-            (contrato) => contrato.status === "Finalizado"
-          );
-          setSearchResult(finalizados);
-          setLoading(false); // Desativa o componente de carregamento
+          const pendentes = data.filter((contrato) => contrato.statusId === 2);
+          setSearchResult(pendentes);
+          setTimeout(() => setLoading(false), 3000);
         });
       } else {
-        getContratos().then((data) => {
-          const finalizadosFiltrados = data.filter(
-            (contrato) =>
-              contrato.status === "Finalizado" &&
-              contrato.titular.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          setSearchResult(finalizadosFiltrados);
-          setLoading(false); // Desativa o componente de carregamento
+        getContratoBusca(searchTerm).then((data) => {
+          const pendentes = data.filter((contrato) => contrato.statusId === 2);
+          setSearchResult(pendentes);
+          setTimeout(() => setLoading(false), 3000);
         });
       }
-    }, 3000); // Atraso de 3 segundos
+    } catch (error) {
+      if (error.message === "Network Error") {
+        setErrorMessage("Erro de conexão. Por favor, verifique sua conexão com a internet e tente novamente.");
+      } else {
+        setErrorMessage(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOpenFormulario = (contrato) => {
+    //navigate("/contratos-finalizados/contrato-finalizado", { state: { contrato } });
+    //id fixado para teste
+    contrato = 5;
+    navigate("/contratos-finalizados/contrato-finalizado", { state: contrato });
+    localStorage.setItem("page-venda", "/contrato-finalizado");
   };
 
   useEffect(() => {
-    if (!initialDataLoaded) {
-      getContratos().then((data) => {
-        if (data) {
-          const contratosFinalizados = data.filter(
-            (contrato) => contrato.status === "Finalizado"
-          );
-          setVendasFinalizadas(contratosFinalizados);
-          setSearchResult(contratosFinalizados);
-          setInitialDataLoaded(true);
-        }
-      });
-    }
-  }, [initialDataLoaded, getContratos]);
+    getContratos().then((data) => {
+      const contratosFinalizados = data.filter(
+        (contrato) => contrato.statusId === 2
+      );
+      setSearchResult(contratosFinalizados);
+    });
+  }, []);
 
   return (
     <div className="container-contratos-vendas">
       <HeaderVendas />
-
       <div className="clientes-contrato-venda8">
         <div className="pesquisa-contrato-venda">
           <input
-            placeholder="Informe o nome do cliente"
+            placeholder="Informe o nome do titular ou vendedor"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

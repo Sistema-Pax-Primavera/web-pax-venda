@@ -8,5 +8,5 @@ export const Vendas = (data) => ({
     data_contrato: converterData(data?.data),
     tipo_contrato: data?.tipo,
     status: data?.status,
-
+    statusId: data?.statusId
 });
