@@ -6,14 +6,12 @@ import FormularioContratos from "../../components/formulario-pendente";
 import { headerVendas } from "../../entities/headers/header-vendas";
 import TableComponent from "../../components/table/table";
 import { useWebVendedor } from "../../services/api";
-import { useNavigate } from "react-router-dom";
 import ButtonText from "../../../../pax-associado/src/components/button-texto/index";
 import Carregando from "../../components/carregando";
 import { ToastContainer, toast } from 'react-toastify';
 
 const Contratos = () => {
   const [vendas, setVendas] = useState([]);
-  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento

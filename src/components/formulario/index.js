@@ -25,8 +25,10 @@ import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SaveIcon from "@mui/icons-material/Save";
 import ButtonText from "../../../../pax-associado/src/components/button-texto";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import ButtonIcon  from '../../../../pax-associado/src/components/button-icon'
 const label = { inputProps: { "aria-label": "Switch demo" } };
+import DownloadIcon from '@mui/icons-material/Download';
 
 function createData(name, filiacao, carencia, falecimento, valor, especie) {
   return { name, filiacao, carencia, falecimento, valor, especie };
