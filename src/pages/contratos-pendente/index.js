@@ -9,6 +9,7 @@ import { useWebVendedor } from "../../services/api";
 import ButtonText from "../../../../pax-associado/src/components/button-texto/index";
 import Carregando from "../../components/carregando";
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const Contratos = () => {
   const [vendas, setVendas] = useState([]);
@@ -17,6 +18,7 @@ const Contratos = () => {
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
   const { getContratos, getContratoBusca } = useWebVendedor();
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
