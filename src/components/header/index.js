@@ -49,6 +49,18 @@ const HeaderVendas = ({ idioma }) => {
       >
         {idioma ? idiomas.es_PY.header.cadastro : idiomas.pt_BR.header.cadastro}
       </button>
+      <button
+        onClick={() => handleMenuClick("/pos-venda")}
+        className={activeRoute === "/pos-venda" ? "active" : ""}
+      >
+        {idioma ? idiomas.es_PY.header.posVenda : idiomas.pt_BR.header.posVenda}
+      </button>
+      <button
+        onClick={() => handleMenuClick("/cancelamento")}
+        className={activeRoute === "/cancelamento" ? "active" : ""}
+      >
+        {idioma ? idiomas.es_PY.header.cancelamento : idiomas.pt_BR.header.cancelamento}
+      </button>
     </div>
   );
 };

@@ -6,6 +6,8 @@ import ContratosFinalizados from "../pages/contratos-finalizados"
 import Cadastro from "../pages/cadastro";
 import FormularioContratos from "../components/formulario-pendente";
 import FormularioContratosFinalizados from "../components/formulario-finalizado";
+import PosVenda from "../pages/pos-venda";
+import Cancelamento from "../pages/cancelamento";
 
 const RoutesApp = () => (
     <BrowserRouter basename="pax-primavera/vendas">
@@ -16,6 +18,8 @@ const RoutesApp = () => (
             <Route exact path="/contratos-finalizados" element={<ContratosFinalizados />} />
             <Route exact path="/contratos-finalizados/contrato-finalizado" element={<FormularioContratosFinalizados />} />
             <Route exact path="/cadastro" element={<Cadastro />} />
+            <Route exact path="/pos-venda" element={<PosVenda />} />
+            <Route exact path="/cancelamento" element={<Cancelamento />} />
         </Routes>
     </BrowserRouter>
 );

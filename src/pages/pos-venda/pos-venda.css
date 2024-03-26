@@ -1,0 +1,28 @@
+.container-pos-venda{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 88%;
+}
+
+.pesquisa-pos-venda{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.pesquisa-pos-venda input{
+    width: 40%;
+    background-color: var(--cinza-leve);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.botao-pesquisa-pos-venda{
+    width: 20%;
+}
+
+.tabela-pos-venda{
+    width: 95%;
+}
