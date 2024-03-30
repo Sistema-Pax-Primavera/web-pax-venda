@@ -26,3 +26,14 @@
 .tabela-pos-venda{
     width: 95%;
 }
+
+.retorno-button-cancelamento{
+    width: 5%;
+}
+
+.retorno-cancelamento{
+    width: 88%;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+}

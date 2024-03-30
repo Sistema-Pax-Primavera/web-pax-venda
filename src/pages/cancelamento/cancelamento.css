@@ -23,6 +23,24 @@
     color: var(--verde);
 }
 
+.colunas-cancelamento2{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--cinza-leve);
+}
+
+.colunas-cancelamento2 label{
+    font-size: 12px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--verde);
+}
+
 .duas-colunas-cancelamento{
     display: flex;
     width: 85%;
@@ -47,3 +65,16 @@
     font-size: 12px;
     font-weight: 800;
 }
+
+.duas-colunas-cancelamento {
+    display: flex;
+  }
+  
+  .colunas-cancelamento1 {
+    flex: 1; /* Para que ambas as colunas tenham a mesma largura */
+  }
+  
+  .colunas-cancelamento2 {
+    flex: 1; /* Para que ambas as colunas tenham a mesma largura */
+  }
+  

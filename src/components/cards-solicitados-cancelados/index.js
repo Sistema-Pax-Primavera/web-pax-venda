@@ -7,34 +7,31 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ButtonIconTextoStart from "../button-icon-texto-start";
 import PlaceIcon from '@mui/icons-material/Place';
 
-const CardsSolicitadosCancelados= () => {
+const CardsSolicitadosCancelados = ({ solicitationNumber, name, date, unit, reason }) => {
   return (
     <div className="card-soli-cobrad">
       <div className="numero-soli-nome">
-        <label>Solicitação 01</label>
-        <p>Carlos Henrique</p>
+        <label>Solicitação {solicitationNumber}</label>
+        <p>{name}</p>
       </div>
       <div className="primeira-categoria-soli">
         <div className="duas-categorias-solicitacoes">
           <CalendarMonthIcon fontSize={"medium"} />
           <div className="categoria-resul-soli">
             <label>Data</label>
-            <p>20/05/2023</p>
+            <p>{date}</p>
           </div>
         </div>
         <div className="duas-categorias-solicitacoes">
           <PlaceIcon fontSize={"medium"} />
           <div className="categoria-resul-soli">
             <label>Unidade</label>
-            <p>Dourados</p>
+            <p>{unit}</p>
           </div>
         </div>
       </div>
       <label>Motivo</label>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's.
-      </p>
+      <p>{reason}</p>
       <div className="aceita-regeita-soli-cob2">
         <div className="buttaos-soli">
           <ButtonIconTextoStart

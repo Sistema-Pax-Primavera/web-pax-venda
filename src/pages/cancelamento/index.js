@@ -15,6 +15,7 @@ import AnnouncementIcon from "@mui/icons-material/Announcement";
 import ErrorIcon from "@mui/icons-material/Error";
 import SearchIcon from "@mui/icons-material/Search";
 import CardsSolicitadosCancelados from "../../components/cards-solicitados-cancelados";
+import CardsCancelamentos from "../../components/cards-cancelamentos";
 
 function createData(name, usuario, unidade, data, motivo) {
   return { name, usuario, unidade, data, motivo };
@@ -46,9 +47,24 @@ const rows = [
 
 const Cancelamento = () => {
   const [mostrarSolicitacoes, setMostrarSolicitacoes] = useState(false);
-
+  const [solicitacoesCanceladas, setSolicitacoesCanceladas] = useState([]);
   const handleClickAbrir = () => {
     setMostrarSolicitacoes(true);
+  };
+
+  const handleAceitar = (numeroSolicitacao) => {
+    // Encontre e remova a solicitação aceita da lista de solicitações canceladas
+    const novasSolicitacoes = solicitacoesCanceladas.filter(
+      (solicitacao) => solicitacao.solicitationNumber !== numeroSolicitacao
+    );
+
+    // Atualize o estado com as solicitações restantes
+    setSolicitacoesCanceladas(novasSolicitacoes);
+  };
+
+  // Função para lidar com a recusa de uma solicitação
+  const handleRecusar = (numeroSolicitacao) => {
+    // Lógica para recusar a solicitação, se necessário
   };
   return (
     <div className="container-contratos-vendas">
@@ -59,7 +75,36 @@ const Cancelamento = () => {
             <label>
               <AnnouncementIcon fontSize={"small"} /> Solicitações
             </label>
-            <SolicitacoesCanceladas />
+            {/* CardsCancelamentos para solicitações pendentes */}
+            <CardsCancelamentos
+              solicitationNumber="01"
+              name="Carlos Henrique"
+              date="20/05/2023"
+              unit="Dourados"
+              reason="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+              onAceitar={() => handleAceitar("01")}
+              onRecusar={() => handleRecusar("01")}
+            />
+
+            <CardsCancelamentos
+              solicitationNumber="02"
+              name="João Silva"
+              date="15/06/2023"
+              unit="Campo Grande"
+              reason="Reason 2"
+              onAceitar={() => handleAceitar("02")}
+              onRecusar={() => handleRecusar("02")}
+            />
+
+            <CardsCancelamentos
+              solicitationNumber="03"
+              name="Maria Souza"
+              date="10/07/2023"
+              unit="Três Lagoas"
+              reason="Reason 3"
+              onAceitar={() => handleAceitar("03")}
+              onRecusar={() => handleRecusar("03")}
+            />
           </div>
           <div className="colunas-cancelamento1">
             <label>
@@ -68,14 +113,26 @@ const Cancelamento = () => {
             <div className="procura-cancelados">
               <input placeholder="Pesquisar"></input>
               <div>
-              <ButtonIconTextoStart
-                icon={<SearchIcon fontSize={"small"} />}
-                corFundoBotao={"#006b33"}
-                corTextoBotao={"#ffff"}
-              />
+                <ButtonIconTextoStart
+                  icon={<SearchIcon fontSize={"small"} />}
+                  corFundoBotao={"#006b33"}
+                  corTextoBotao={"#ffff"}
+                />
               </div>
             </div>
-            <CardsSolicitadosCancelados />
+            {/* CardsCancelamentos para solicitações canceladas */}
+            {solicitacoesCanceladas.map((solicitacao, index) => (
+              <CardsCancelamentos
+                key={index}
+                solicitationNumber={solicitacao.solicitationNumber}
+                name={solicitacao.name}
+                date={solicitacao.date}
+                unit={solicitacao.unit}
+                reason={solicitacao.reason}
+                onAceitar={() => handleAceitar(solicitacao.solicitationNumber)}
+                onRecusar={() => handleRecusar(solicitacao.solicitationNumber)}
+              />
+            ))}
           </div>
         </div>
       ) : (
