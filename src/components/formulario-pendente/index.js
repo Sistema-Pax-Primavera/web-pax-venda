@@ -31,12 +31,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useWebVendedor } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 import { converterData } from "../../utils/fuctions";
+import ButtonIconTextoStart from "../button-icon-texto-start";
 
 const style = {
   position: "absolute",
@@ -51,7 +52,6 @@ const style = {
 };
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
-
 
 function cliente(name, filiacao, carencia, falecimento, valor, especie) {
   return { name, filiacao, carencia, falecimento, valor, especie };
@@ -85,8 +85,8 @@ const FormularioContratos = () => {
   const [visualizarClicado, setVisualizarClicado] = useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [input1, setInput1] = useState('');
-  const [input2, setInput2] = useState('');
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
 
   const [showTable, setShowTable] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
@@ -130,7 +130,7 @@ const FormularioContratos = () => {
   };
 
   const handleSwitchChange = () => {
-    console.log(cremacaoAtivada)
+    console.log(cremacaoAtivada);
     // Atualiza o estado do switch
     setCremacaoAtivada(!cremacaoAtivada);
   };
@@ -144,10 +144,9 @@ const FormularioContratos = () => {
     setNacionalidade(JSON.parse(event.target.value));
   };
 
-
   const handleCloseFormulario = () => {
-    navigate('/contratos',)
-    localStorage.setItem('page-venda', '/contratos');
+    navigate("/contratos");
+    localStorage.setItem("page-venda", "/contratos");
   };
 
   useEffect(() => {
@@ -155,8 +154,8 @@ const FormularioContratos = () => {
     setTimeout(() => {
       getContrato(contratoId).then((data) => {
         setCliente(data[0]);
-        setCremacaoAtivada(data[0].is_carencia)
-        setCremacaoAtivada(data[0].is_cremacao)
+        setCremacaoAtivada(data[0].is_carencia);
+        setCremacaoAtivada(data[0].is_cremacao);
       });
       setShowLoading(false);
       setShowFormulario(true);
@@ -166,7 +165,6 @@ const FormularioContratos = () => {
   return (
     <div className="container-contratos-vendas1">
       <div className="clientes-contrato-venda1">
-
         {showLoading && (
           <div className="carregando-projetos">
             <Carregando />
@@ -175,7 +173,13 @@ const FormularioContratos = () => {
         {showFormulario && (
           <div className="avanca-form-volta">
             <div className="button-retorn">
-              <IconeButtonTable icon={<ArrowBackIosNewIcon fontSize={"small"} />} title="RETORNAR" funcao={handleCloseFormulario} />
+              <ButtonIconTextoStart
+                icon={<ArrowBackIosNewIcon fontSize={"small"} />}
+                title="RETORNAR"
+                funcao={handleCloseFormulario}
+                corFundoBotao={'#006b33'}
+                corTextoBotao={'#ffff'}
+              />
             </div>
             <div className="container-contrato-cards">
               <div className="formulario-confirma-cadastros">
@@ -233,58 +237,81 @@ const FormularioContratos = () => {
                         </div>
                         <div className="campos-03-contrato">
                           <label>Contrato</label>
-                          <input type="text" name="contrato" value={cliente.contrato} />
+                          <input
+                            type="text"
+                            name="contrato"
+                            value={cliente.contrato}
+                          />
                         </div>
                         <div className="campos-03-contrato">
                           <label>Gênero</label>
                           <select value={cliente.genero}>
                             <option value={null}>Selecione uma opção</option>
-                            <option value={'Masculino'}>Masculino</option>
-                            <option value={'Feminino'}>Feminino</option>
-                            <option value={'Nao Binario'}>Não Binario</option>
-                            <option value={'Nao Informado'}>Não Informado</option>
+                            <option value={"Masculino"}>Masculino</option>
+                            <option value={"Feminino"}>Feminino</option>
+                            <option value={"Nao Binario"}>Não Binario</option>
+                            <option value={"Nao Informado"}>
+                              Não Informado
+                            </option>
                           </select>
                         </div>
                       </div>
                       <div className="container-linha">
                         <div className="data-nascimento-contrato">
                           <label>Data Nascimento</label>
-                          <input type="date" name="data nascimento" value={cliente.data_nascimento} />
+                          <input
+                            type="date"
+                            name="data nascimento"
+                            value={cliente.data_nascimento}
+                          />
                         </div>
                         <div className="campos-02-contrato">
                           <label>Religiao</label>
                           <select value={cliente.religiao}>
                             <option value={null}>Selecione uma opção</option>
-                            <option value={cliente.religiao}>{cliente.religiao}</option>
+                            <option value={cliente.religiao}>
+                              {cliente.religiao}
+                            </option>
                           </select>
                         </div>
                         <div className="rg-contrato">
                           <label>UF</label>
                           <select value={cliente.uf}>
                             <option value={null}>Selecione uma opção</option>
-                            <option value={'MS'}>Mato Grosso do Sul</option>
-                            <option value={'SP'}>São Paulo</option>
-                            <option value={'PR'}>Parana</option>
-                            <option value={'RJ'}>Rio de Janeiro</option>
-                            <option value={'MT'}>Mato Grosso</option>
+                            <option value={"MS"}>Mato Grosso do Sul</option>
+                            <option value={"SP"}>São Paulo</option>
+                            <option value={"PR"}>Parana</option>
+                            <option value={"RJ"}>Rio de Janeiro</option>
+                            <option value={"MT"}>Mato Grosso</option>
                           </select>
                         </div>
                         <div className="campos-02-contrato">
                           <label>Naturalidade</label>
-                          <input type="text" name="contrato" value={cliente.naturalidade} />
+                          <input
+                            type="text"
+                            name="contrato"
+                            value={cliente.naturalidade}
+                          />
                         </div>
                         <div className="campos-02-contrato">
                           <label>Nacionalidade</label>
-                          <select value={cliente.nacionalidade} onChange={handleNacionalidade}>
-                            <option value={'Brasileiro'}>Brasileiro(a)</option>
-                            <option value={'Estrangueiro'}>Estrangueiro(a)</option>
+                          <select
+                            value={cliente.nacionalidade}
+                            onChange={handleNacionalidade}
+                          >
+                            <option value={"Brasileiro"}>Brasileiro(a)</option>
+                            <option value={"Estrangueiro"}>
+                              Estrangueiro(a)
+                            </option>
                           </select>
                         </div>
                         <div className="campos-02-contrato">
                           <label>Profissão</label>
                           <select value={cliente.profissao}>
                             <option value={null}>Selecione uma opção</option>
-                            <option value={cliente.profissao}>{cliente.profissao}</option>
+                            <option value={cliente.profissao}>
+                              {cliente.profissao}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -293,7 +320,9 @@ const FormularioContratos = () => {
                           <label> Estado Civil</label>
                           <select value={cliente.estado_civil}>
                             <option value={null}>Selecione uma opção</option>
-                            <option value={cliente.estado_civil}>{cliente.estado_civil}</option>
+                            <option value={cliente.estado_civil}>
+                              {cliente.estado_civil}
+                            </option>
                           </select>
                         </div>
                         <div className="campos-02-contrato">
@@ -308,11 +337,19 @@ const FormularioContratos = () => {
                           <>
                             <div className="campos-04-contrato">
                               <label>Data Inicio Carência</label>
-                              <input type="date" name="dataInicioCarencia" value={cliente.data_inicio_carencia} />
+                              <input
+                                type="date"
+                                name="dataInicioCarencia"
+                                value={cliente.data_inicio_carencia}
+                              />
                             </div>
                             <div className="campos-04-contrato">
                               <label>Data Final Carência</label>
-                              <input type="date" name="dataFimCarencia" value={cliente.data_final_carencia} />
+                              <input
+                                type="date"
+                                name="dataFimCarencia"
+                                value={cliente.data_final_carencia}
+                              />
                             </div>
                           </>
                         )}
@@ -327,10 +364,13 @@ const FormularioContratos = () => {
                         {cremacaoAtivada && (
                           <div className="campos-02-contrato">
                             <label>Data da Cremação</label>
-                            <input type="date" name="dataCremacao" value={cliente.data_cremacao} />
+                            <input
+                              type="date"
+                              name="dataCremacao"
+                              value={cliente.data_cremacao}
+                            />
                           </div>
                         )}
-
                       </div>
                     </div>
                   </div>
@@ -382,7 +422,6 @@ const FormularioContratos = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -434,7 +473,6 @@ const FormularioContratos = () => {
                           <label>Complemento</label>
                           <input></input>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -477,7 +515,6 @@ const FormularioContratos = () => {
                           <label>Pagar Adesão</label>
                           <Switch {...label} size="small" />
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -523,7 +560,6 @@ const FormularioContratos = () => {
                                 <label>Parentesco</label>
                                 <select></select>
                               </div>
-
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
@@ -593,8 +629,6 @@ const FormularioContratos = () => {
                                 <label> Falecimento</label>
                                 <DateMaskInput />
                               </div>
-
-
                             </div>
                             <div className="container-linha">
                               <div className="campos-legenda-contrato">
@@ -652,7 +686,6 @@ const FormularioContratos = () => {
                                 </TableCell>
                                 <TableCell align="center">Valor</TableCell>
                                 <TableCell align="center">Espécie</TableCell>
-
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -683,7 +716,6 @@ const FormularioContratos = () => {
                                   <TableCell align="center">
                                     {dependente.especie}
                                   </TableCell>
-
                                 </TableRow>
                               ))}
                             </TableBody>
@@ -723,7 +755,11 @@ const FormularioContratos = () => {
                                         component="h2"
                                       >
                                         <div className="fecha-pdf-contrato">
-                                          <button onClick={handleClose}><HighlightOffIcon fontSize={'small'} /></button>
+                                          <button onClick={handleClose}>
+                                            <HighlightOffIcon
+                                              fontSize={"small"}
+                                            />
+                                          </button>
                                         </div>
                                       </Typography>
                                       <Typography>
@@ -773,21 +809,33 @@ const FormularioContratos = () => {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 )}
               </div>
               <div className="formulario-contratos-contratos">
-                <ConfirmacaoContratos tipo={'Contrato Novo'} data={converterData(cliente.data_contrato)} mostrarBotoes={mostrarBotoes} onOpenModal={handleOpenModal} />
+                <ConfirmacaoContratos
+                  tipo={"Contrato Novo"}
+                  data={converterData(cliente.data_contrato)}
+                  mostrarBotoes={mostrarBotoes}
+                  onOpenModal={handleOpenModal}
+                />
               </div>
               {isModalOpen && (
                 <Modal onClose={handleCloseModal}>
                   {/* Conteúdo da sua modal */}
                   <label>Input 1:</label>
-                  <input type="text" value={input1} onChange={(e) => setInput1(e.target.value)} />
+                  <input
+                    type="text"
+                    value={input1}
+                    onChange={(e) => setInput1(e.target.value)}
+                  />
                   <label>Input 2:</label>
-                  <input type="text" value={input2} onChange={(e) => setInput2(e.target.value)} />
+                  <input
+                    type="text"
+                    value={input2}
+                    onChange={(e) => setInput2(e.target.value)}
+                  />
                   <button onClick={handleConfirmButtonClick}>Confirmar</button>
                 </Modal>
               )}

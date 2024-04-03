@@ -28,6 +28,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import AcordionPerguntas from "../acordion-perguntas";
 import EditIcon from "@mui/icons-material/Edit";
 import ButtonIconTextoStart from "../button-icon-texto-start";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -71,6 +73,31 @@ const FormularioPosVenda = () => {
     useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
   const { getContrato } = useWebVendedor();
+  const [formularioAberto, setFormularioAberto] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+    }
+  };
+  
+
+  const handleDelete = () => {
+    setFile(null);
+  };
+
+  const handleDownload = () => {
+    // Implement download logic here
+    // For example, you can use window.open() to download the file
+  };
+
+  const handleEditClick = () => {
+    // Define o estado para indicar que o formulário deve ser exibido
+    setFormularioAberto(true);
+    // Você pode adicionar mais lógica aqui, como preencher o formulário com os dados da linha clicada
+  };
 
   const handleOpen = () => {
     setMostrarBotoes(true);
@@ -376,6 +403,66 @@ const FormularioPosVenda = () => {
               <div className="dados-info-contract">
                 <div className="tabela-info-contrato">
                   <div className="container-linha2">
+                    {formularioAberto && (
+                      <div>
+                        <div className="layout-linha">
+                          <div className="container-linha">
+                            <div className="campos-01-venda-pos-venda">
+                              <label>Nome</label>
+                              <input />
+                            </div>
+                            <div className="campos-02-pos-venda">
+                              <label>Data Nascimento</label>
+                              <input />
+                            </div>
+                            <div className="data-filiacao-03-pos">
+                              <label>Data Filiação</label>
+                              <input />
+                            </div>
+                            <div className="campos-02-pos-venda">
+                              <label>CPF</label>
+                              <input />
+                            </div>
+                            <div className="campos-02-pos-venda">
+                              <label>Parentesco</label>
+                              <select></select>
+                            </div>
+                          </div>
+                          <div className="container-linha">
+                            <div className="campos-04-pos">
+                              <label>Status</label>
+                              <input />
+                            </div>
+                            <div className="campos-02-pos-venda">
+                              <label>Valor Adicional</label>
+                              <input />
+                            </div>
+                            <div className="campos-02-pos-venda">
+                              <label> Falecimento</label>
+                              <input></input>
+                            </div>
+
+                            <div className="salva-dependentes"></div>
+                          </div>
+                          <div className="container-linha">
+                            <div className="campos-legenda">
+                              <div className="legenda-cremacao">
+                                <div className="legenda-amarela"></div>
+                                <label>Em Carência</label>
+                                <div className="legenda-roxa"></div>
+                                <label>Falecido</label>
+                                <div className="legenda-laranja"></div>
+                                <label>Filho com 21 Anos</label>
+                                <div className="legenda-vermelho"></div>
+                                <label>Inativo ou Promovido</label>
+                                <div className="legenda-ativo"></div>
+                                <label>Ativo</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <TableContainer component={Paper}>
                       <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
@@ -432,6 +519,7 @@ const FormularioPosVenda = () => {
                                     corFundoBotao={"#006b33"}
                                     corTextoBotao={"#ffff"}
                                     width="20px"
+                                    funcao={handleEditClick}
                                   />
                                 </div>
                               </TableCell>
@@ -455,59 +543,44 @@ const FormularioPosVenda = () => {
                         <div className="contrato-associados-anexo">
                           <label>Arquivo</label>
                           <div className="document">
-                            <a>
-                              <PostAddIcon fontSize={"large"} />
-                            </a>
-
-                            <button>VISUALIZAR</button>
-                            <Modal
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
+                          <PostAddIcon fontSize="large" />
+                            <input
+                              type="file"
+                              onChange={handleFileChange}
+                              style={{ display: "none" }}
+                            />
+                            <a
+                              onClick={() =>
+                                document
+                                  .querySelector('input[type="file"]')
+                                  .click()
+                              }
                             >
-                              <Box sx={style}>
-                                <Typography
-                                  id="modal-modal-title"
-                                  variant="h6"
-                                  component="h2"
-                                >
-                                  <div className="documento-anexo">
-                                    <img src={Documento}></img>
-                                  </div>
-                                </Typography>
-                              </Box>
-                            </Modal>
+                              <button >ANEXAR</button>
+                            </a>
+                            
                           </div>
                         </div>
-
                         <div className="document2">
-                          {arquivos.map((arquivo, index) => (
-                            <div key={index}>
+                          {file && (
+                            <div>
                               <div className="contrato-associados">
-                                <TaskIcon />
-                                <label> {arquivo.name}</label>
+                                <label>{file.name}</label>
                                 <div className="baixa-delete-contrato">
                                   <div className="deleta-contrato">
-                                    <button
-                                      onClick={() => handleExcluirClick(index)}
-                                    >
-                                      <DeleteIcon fontSize={"small"} />
+                                    <button onClick={handleDelete}>
+                                      <DeleteForeverIcon fontSize="small" />
                                     </button>
                                   </div>
                                   <div className="baixa-contrato">
-                                    <button
-                                      onClick={() =>
-                                        handleDownloadClick(arquivo)
-                                      }
-                                    >
-                                      <DownloadIcon fontSize={"small"} />
+                                    <button onClick={handleDownload}>
+                                      <CloudDownloadIcon fontSize="small" />
                                     </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>

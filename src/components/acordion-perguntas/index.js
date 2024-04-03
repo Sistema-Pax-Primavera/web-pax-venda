@@ -123,7 +123,7 @@ const AcordionPerguntas = () => {
                       </div>
                     </div>
                     <div className="campos-01-pos">
-                      <label>Se sim qual contato?</label>
+                      <label>Se sims qual contato?</label>
                       <input></input>
                     </div>
                   </div>
