@@ -5,7 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'; // Ícone para o botão "Aguardando sincronização"
-import ButtonIconTextoStart from "../../../../pax-cobranca/src/componentes/button-icon-texto-start";
+import ButtonIconTextoStart from '../button-icon-texto-start'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const CardsSolicitadosCancelados = ({ onAceitar, mostraBotoes, onRejeitar, onAguardandoSincronizacao, textoAdicional }) => {
