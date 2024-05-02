@@ -38,6 +38,8 @@ import { useWebVendedor } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 import { converterData } from "../../utils/fuctions";
 import ButtonIconTextoStart from "../button-icon-texto-start";
+import AcordionPerguntas from "../acordion-perguntas";
+import AcordionAvisos from "../acordion-avisos";
 
 const style = {
   position: "absolute",
@@ -171,14 +173,14 @@ const FormularioContratos = () => {
           </div>
         )}
         {showFormulario && (
-          <div className="avanca-form-volta">
+          <div className="avanca-form-volta2">
             <div className="button-retorn">
               <ButtonIconTextoStart
                 icon={<ArrowBackIosNewIcon fontSize={"small"} />}
                 title="RETORNAR"
                 funcao={handleCloseFormulario}
-                corFundoBotao={'#006b33'}
-                corTextoBotao={'#ffff'}
+                corFundoBotao={"#006b33"}
+                corTextoBotao={"#ffff"}
               />
             </div>
             <div className="container-contrato-cards">
@@ -840,6 +842,15 @@ const FormularioContratos = () => {
                 </Modal>
               )}
             </div>
+            <div className="perguntas-avisos-pendentes">
+              <div className="perguntas-pendentes-vendas">
+                <AcordionPerguntas />
+              </div>
+              <div className="perguntas-pendentes-vendas">
+                <AcordionAvisos />
+              </div>
+            </div>
+
             <ToastContainer />
           </div>
         )}

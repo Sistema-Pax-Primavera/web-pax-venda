@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./acordion-perguntas.css";
 import Accordion from "@mui/material/Accordion";
 import AccordionActions from "@mui/material/AccordionActions";
@@ -11,10 +11,17 @@ import Switch from "@mui/material/Switch";
 const label = { inputProps: { "aria-label": "Switch demo" } };
 import HelpIcon from "@mui/icons-material/Help";
 import ButtonIconTextoStart from "../button-icon-texto-start";
+
 const AcordionPerguntas = () => {
+  const [activeSection, setActiveSection] = useState("Usuário");
+
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+  };
+
   return (
     <div className="contianer-acordion-perguntas">
-      <Accordion>
+      <Accordion style={{ backgroundColor: "#E6E6E6" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -29,23 +36,42 @@ const AcordionPerguntas = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className="conte-perguntas-cliente">
+            <div className="navegacao-pergunta-venda">
+              <button
+                className={activeSection === "Usuário" ? "active" : ""}
+                onClick={() => handleSectionChange("Usuário")}
+                style={{
+                  backgroundColor: activeSection === "Usuário" ? "#ffffff" : "",
+                  color: activeSection === "Usuário" ? "#006b33" : "",
+                }}
+              >
+                USUÁRIO
+              </button>
+              <button
+                className={activeSection === "Cliente" ? "active" : ""}
+                onClick={() => handleSectionChange("Cliente")}
+                style={{
+                  backgroundColor: activeSection === "Cliente" ? "#ffffff" : "",
+                  color: activeSection === "Cliente" ? "#006b33" : "",
+                }}
+              >
+                CLIENTE
+              </button>
+            </div>
+            
             <div className="tipos-perguntas-acordion">
+            {activeSection === "Usuário" && (
               <div className="campos-duvidas-pos">
-                <p>Usuário</p>
                 <div className="aling-perguntas-acord">
                   <div className="campos-duvidas-pos2">
                     <div className="campos-01-pos">
                       <label>Houve contato com cliente?</label>
                       <div>
-                        <label>
-                          Sim
-                        </label>
+                        <label>Sim</label>
                         <label>
                           <Switch {...label} />
                         </label>
-                        <label>
-                          Não
-                        </label>
+                        <label>Não</label>
                       </div>
                     </div>
                     <div className="campos-01-pos">
@@ -61,15 +87,11 @@ const AcordionPerguntas = () => {
                     <div className="campos-01-pos">
                       <label>Foi corrigido alguma informação?</label>
                       <div>
-                        <label>
-                          Sim
-                        </label>
+                        <label>Sim</label>
                         <label>
                           <Switch {...label} />
                         </label>
-                        <label>
-                          Não
-                        </label>
+                        <label>Não</label>
                       </div>
                     </div>
                     <div className="campos-01-pos">
@@ -79,23 +101,19 @@ const AcordionPerguntas = () => {
                   </div>
                 </div>
               </div>
-
+            )}
+            {activeSection === "Cliente" && (
               <div className="campos-duvidas-pos">
-                <p>Cliente</p>
                 <div className="aling-perguntas-acord">
                   <div className="campos-duvidas-pos2">
                     <div className="campos-01-pos">
                       <label>Recomendaria a Pax Primavera</label>
                       <div>
-                        <label>
-                          Sim
-                        </label>
+                        <label>Sim</label>
                         <label>
                           <Switch {...label} />
                         </label>
-                        <label>
-                          Não
-                        </label>
+                        <label>Não</label>
                       </div>
                     </div>
                     <div className="campos-01-pos">
@@ -111,15 +129,11 @@ const AcordionPerguntas = () => {
                     <div className="campos-01-pos">
                       <label>Cliente informou outro contato</label>
                       <div>
-                        <label>
-                          Sim
-                        </label>
+                        <label>Sim</label>
                         <label>
                           <Switch {...label} />
                         </label>
-                        <label>
-                          Não
-                        </label>
+                        <label>Não</label>
                       </div>
                     </div>
                     <div className="campos-01-pos">
@@ -129,17 +143,19 @@ const AcordionPerguntas = () => {
                   </div>
                 </div>
               </div>
+              )}
             </div>
             <div className="conte-perguntas-cliente">
               <label>Comentário do Usuário</label>
-              <textarea/>
+              <textarea />
             </div>
             <div className="salva-result-acordion">
               <ButtonIconTextoStart
-              corFundoBotao={'#006b33'}
-              corTextoBotao={'#ffff'}
-              fontWeightBotao={800}
-              title={'SALVAR'}/>
+                corFundoBotao={"#006b33"}
+                corTextoBotao={"#ffff"}
+                fontWeightBotao={800}
+                title={"SALVAR"}
+              />
             </div>
           </div>
         </AccordionDetails>

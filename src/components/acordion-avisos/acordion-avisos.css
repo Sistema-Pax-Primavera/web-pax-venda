@@ -90,6 +90,25 @@
     gap: 5px;
 }
 
+.linhas-contratos-pendentes{
+    display: flex;
+    flex-direction: column;
+}
+
+.linhas-contratos-pendentes2{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.linhas-contratos-pendentes input{
+    font-weight: 500;
+}
+
+.campos-botao-contrato-pendente{
+    width: 5%;
+}
+
 .conte-perguntas-cliente{
     display: flex;
     flex-direction: column;
@@ -133,4 +152,51 @@
     width: 15%;
     font-size: 10px;
     cursor: pointer;
+}
+
+.additional-field{
+    background-color: var(--branco);
+    border-radius: 10px;
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+}
+
+.additional-field label{
+    width:70%;
+    margin-left: 10px;
+}
+
+.close-option-contrato{
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opcoes-adicionaddas-contratos{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.close-option-contrato button{
+    color: var(--verde);
+}
+
+.linha-contrato-botao{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.linha-contrato-botao label{
+    width: 70%;
+}
+
+.linha-contrato-botao button{
+    width: 10%;
 }
