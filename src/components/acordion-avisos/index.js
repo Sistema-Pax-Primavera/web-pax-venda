@@ -93,23 +93,34 @@ const AcordionAvisos = () => {
                     <div className="close-option-contrato">
                       <div className="linha-contrato-botao">
                         <label>{field}</label>
+                        <div className="confirma-aviso-contrato">
                         <button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => {
-                            setSelectedFieldIndex(index);
-                            setIsTextareaVisible(true);
-                          }}
-                        >
-                          {isTextareaVisible && selectedFieldIndex === index ? (
-                            <CheckCircleOutlineIcon />
-                          ) : (
-                            <PostAddIcon fontSize={"small"} />
-                          )}
-                        </button>
-                        <button style={{color: '#FF0000'}}
-                          onClick={() => handleDeleteAdditionalField(index)}
-                        />
+  variant="contained"
+  color="primary"
+  onClick={() => {
+    setSelectedFieldIndex(index);
+    setIsTextareaVisible(!isTextareaVisible); // Alterna o estado de visibilidade do input
+    if (!isTextareaVisible) {
+      const updatedReasons = [...reasons];
+      updatedReasons[index] = inputValue;
+      setReasons(updatedReasons);
+    }
+  }}
+>
+  {isTextareaVisible && selectedFieldIndex === index ? (
+    <CheckCircleOutlineIcon />
+  ) : (
+    <PostAddIcon fontSize={"small"} />
+  )}
+</button>
+
+
+                        </div>
+                        <div className="confirma-aviso-contrato2">
+                          <button
+                            onClick={() => handleDeleteAdditionalField(index)}
+                          ><HighlightOffIcon fontSize={'small'}/></button>
+                        </div>
                       </div>
                     </div>
                     <input

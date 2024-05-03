@@ -167,6 +167,13 @@
     margin-left: 10px;
 }
 
+.additional-field input{
+    background-color: var(--cinza-leve);
+    border: 1px solid var(--verde);
+    display: flex;
+    font-size: 11px;
+}
+
 .close-option-contrato{
     width: 100%;
     flex-direction: column;
@@ -180,6 +187,7 @@
     align-items: center;
     gap: 5px;
     width: 100%;
+    margin-top: 5px;
     flex-wrap: wrap;
 }
 
@@ -191,12 +199,51 @@
     display: flex;
     align-items: center;
     width: 100%;
+    padding: 5px;
 }
 
 .linha-contrato-botao label{
-    width: 70%;
+    width: 65%;
 }
 
 .linha-contrato-botao button{
-    width: 10%;
+    width: 30%;
+}
+
+.confirma-aviso-contrato{
+    width: 15%;
+    display: flex;
+    margin-right: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirma-aviso-contrato2{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirma-aviso-contrato button{
+    background-color: var(--verde);
+    color: var(--branco);
+    padding: 1px;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirma-aviso-contrato2 button{
+    background-color: var(--vermelho);
+    color: var(--branco);
+    padding: 3px;
+    width: 100%;
+    border-radius: 10px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
