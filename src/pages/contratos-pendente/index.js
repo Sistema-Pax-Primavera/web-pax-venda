@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FormularioContratos from "../../components/formulario-pendente";
 import { headerVendas } from "../../entities/headers/header-vendas";
 import TableComponent from "../../components/table/table";
-import { useWebVendedor } from "../../services/api";
+import { useVendas } from "../../services/api";
 import ButtonText from "../../../../pax-associado/src/components/button-texto/index";
 import Carregando from "../../components/carregando";
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,7 +16,7 @@ const Contratos = () => {
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
-  const { getContratos, getContratoBusca } = useWebVendedor();
+  const { getContratos, getContratoBusca } = useVendas();
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 

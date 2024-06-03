@@ -4,7 +4,7 @@ import { Vendas } from '../entities/class/vendas';
 import { CRM } from '../entities/class/crm';
 import httpsInstance from './url';
 
-export const useWebVendedor = () => {
+export const useVendas = () => {
     const https = httpsInstance()
 
     const getContratos = async () => {
@@ -43,23 +43,11 @@ export const useWebVendedor = () => {
             console.error("Erro ao obter contratos da API:", error);
             return error;
         }
-
     }
 
-
-    return {
-        getContratos,
-        getContratoBusca,
-        getContrato
-    }
-}
-
-export const useCRM = () => {
-    const https = httpsInstance()
-
-    const getCRMEsc = async () => {
+    const getCRMVendas = async () => {
         try {
-            const response = await https.get("/crm-escritorio");
+            const response = await https.get("/crm-vendas");
             const data = response.data;
             if (data && Array.isArray(data)) {
                 const crmData = data.map(item => {
@@ -80,6 +68,12 @@ export const useCRM = () => {
 
 
     return {
-        getCRMEsc,
+        getContratos,
+        getContratoBusca,
+        getContrato,
+        getCRMVendas
     }
 }
+
+
+

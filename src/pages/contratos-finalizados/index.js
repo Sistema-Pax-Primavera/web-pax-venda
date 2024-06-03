@@ -5,7 +5,7 @@ import "../../components/formulario-finalizado/formulario-finalizados.css";
 import { headerVendas } from "../../entities/headers/header-vendas";
 import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/table/table";
-import { useWebVendedor } from "../../services/api";
+import { useVendas } from "../../services/api";
 import ButtonText from "../../../../pax-associado/src/components/button-texto";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ const ContratosFinalizados = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const { getContratos, getContratoBusca } = useWebVendedor();
+  const { getContratos, getContratoBusca } = useVendas();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSearch = () => {

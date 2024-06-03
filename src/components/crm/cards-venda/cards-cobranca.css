@@ -15,7 +15,6 @@
 .info-card-cobran {
     display: flex;
     align-items: center;
-    gap: 5px;
     justify-content: start;
     color: var(--verde);
 }

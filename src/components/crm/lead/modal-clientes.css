@@ -42,10 +42,9 @@
 
 }
 
-.atender-clientes-cobranca {
+.atender-clientes-vendas-crm {
     background-color: var(--verde);
-    margin-left: 12%;
-    margin-right: 2%;
+    margin-left: 5%;
     width: 15%;
     display: flex;
     align-items: center;
@@ -54,23 +53,22 @@
     border-radius: 5px;
 }
 
-.atender-clientes-cobranca button {
+.atender-clientes-vendas-crm button {
     color: var(--branco);
     cursor: pointer;
     width: 100%;
     font-size: 12px;
     border-radius: 5px;
     font-weight: 700;
-    background-color: var(--verde);
 }
 
-.contador-cobranca {
-    width: 15%;
+.contador-vendas-crm {
+    width: 5%;
     font-size: 20px;
     font-weight: 700;
 }
 
-.contador-cobranca p {
+.contador-vendas-crm p {
     color: var(--vermelho);
     font-size: 20px;
     border-radius: 5px;
@@ -78,47 +76,53 @@
 }
 
 .like-deslike-atendimento {
-    width: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
+    width: 1px;
+    gap: 5px;
 }
 
-.container-modal-cobran {
+.container-modal-vendas-crm {
     z-index: 5;
     padding-left: 10px;
     width: 100%;
+    margin-bottom: 10px;
 }
 
-.like-atendimento {
-    color: var(--verde);
+.botoes-modal-vendas-crm {
+    width: 100%;
+    margin-top: 40px;
+    margin-left: 35px;
+}
+
+.dados-basico-cobran {
+    width: 100%;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.botao-vendas-crm {
+    margin-bottom: 10px;
+}
+
+.oportunidade-ganha {
+    color: #ccc;
     cursor: pointer;
 }
 
-.deslike-atendimento {
-    color: var(--vermelho);
+.oportunidade-perdida {
+    color: #ccc;
     cursor: pointer;
 }
 
-.dados-basico-cobran2  {
-    width: 94%;
+.dados-basico-vendas2 {
+    width: 100%;
     padding: 5px;
-    gap: 20px;
+    gap: 10px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     background-color: var(--cinza-leve);
     border-radius: 10px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.dados-basico-cobran3  {
-    width: 50%;
-    gap: 15px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
 }
 
 .alert-dados-basico-cobran {
@@ -132,7 +136,7 @@
     display: flex;
     align-items: end;
     gap: 5px;
-    width: 100%;
+    width: 75%;
 }
 
 .origin-lead-cobran2 {
@@ -150,11 +154,10 @@
     font-weight: 500;
 }
 
-.infor-modal-cobrancas {
+.infor-modal-vendas-crm {
     display: flex;
-    align-items: center;
     width: 100%;
-    gap: 15px;
+    gap: 10px;
 }
 
 .lead-origin-cobran {
@@ -168,21 +171,23 @@
     font-weight: 500;
 }
 
-.tipo-atendimento-cobran {
-    width: 95%;
+.tipo-atendimento-vendas {
+    width: 75%;
     display: flex;
     border: 1px solid rgba(0, 0, 0, .6);
     border-radius: 5px;
     padding: 10px;
     flex-direction: column;
 }
-.historicof9{
+
+.historicof9 {
     display: flex;
     flex-direction: column;
     padding: 10px;
     gap: 10px;
 }
-.historicof9 h1{
+
+.historicof9 h1 {
     font-size: 15px;
     font-weight: 800;
     color: var(--verde);
@@ -191,21 +196,21 @@
     gap: 10px;
 }
 
-.historicof9-close{
+.historicof9-close {
     display: flex;
     align-items: center;
 
 }
 
-.historicof9-close h1{
+.historicof9-close h1 {
     width: 95%;
 }
 
-.historicof9-close button{
+.historicof9-close button {
     color: var(--vermelho);
 }
 
-.historicof9-campos{
+.historicof9-campos {
     display: flex;
     align-items: start;
     justify-content: start;
@@ -218,14 +223,14 @@
     width: 20%;
 }
 
-.campos-tiposf9 label{
+.campos-tiposf9 label {
     font-size: 12px;
     color: var(--preto);
     font-weight: 500;
 
 }
 
-.campos-tiposf9 p{
+.campos-tiposf9 p {
     background-color: var(--cinza-leve);
     border-radius: 5px;
     font-weight: 500;
@@ -241,14 +246,14 @@
     width: 40%;
 }
 
-.campos-tiposf92 label{
+.campos-tiposf92 label {
     font-size: 12px;
     color: var(--preto);
     font-weight: 500;
 
 }
 
-.campos-tiposf92 p{
+.campos-tiposf92 p {
     background-color: var(--cinza-leve);
     border-radius: 5px;
     font-weight: 500;
@@ -264,14 +269,14 @@
     width: 90%;
 }
 
-.campos-tiposf923 label{
+.campos-tiposf923 label {
     font-size: 12px;
     color: var(--preto);
     font-weight: 500;
 
 }
 
-.campos-tiposf923 a{
+.campos-tiposf923 a {
     font-size: 12px;
     color: var(--preto);
     font-weight: 500;
@@ -287,7 +292,7 @@
     font-size: 12px;
 }
 
-.historicof9 p{
+.historicof9 p {
     font-size: 12px;
     font-weight: 600;
 }
@@ -317,15 +322,6 @@
     margin-left: 45px;
 }
 
-.container-linhas-cobranças2 {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.container-linhas-cobranças2 label {
-    font-weight: 500;
-}
 
 .container-linhas-cobran {
 
@@ -337,11 +333,6 @@
     font-weight: 500;
 }
 
-.container-linhas-cobran2 {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
 
 .container-linhas-dowload-cobran label {
     color: var(--preto);
@@ -396,12 +387,11 @@
     width: 30%;
 }
 
-.obs-cobranca-dados {
+.obs-vendas-dados {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
-
 }
 
 .icon-buton-cobran {
@@ -422,13 +412,13 @@
     gap: 5px;
 }
 
-.obs-cobran-lead {
+.obs-vendas-lead {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 100%;
 }
 
-.obs-cobran-lead textarea {
+.obs-vendas-lead textarea {
     border-radius: 5px;
     padding: 10px;
     border: none;
@@ -438,10 +428,10 @@
     background-color: var(--cinza-leve);
 }
 
-.atividade-cobranca {
+.atividade-vendas-crm {
     display: flex;
     flex-direction: column;
-    width: 88%;
+    width: 100%;
 }
 
 .icon-atividade-cobran {
@@ -455,44 +445,36 @@
     color: var(--preto);
 }
 
-.campos-atividade-cobranca {
+.campos-atividade-vendas-crm {
     display: flex;
     gap: 5px;
     width: 100%;
 }
 
-.campos-atividade-cobranca select {
+.campos-atividade-vendas-crm select {
     width: 100%;
     background-color: var(--cinza-leve);
     font-weight: 500;
 }
 
-.atividade-cobranca input {
-    background-color: var(--cinza-leve);
-    margin-top: -10px;
-    width: 80%;
-    justify-content: end;
-}
-
-.select-text-area-cobran {
+.select-text-area-vendas {
     gap: 3px;
     border-radius: 5px;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.select-text-area-cobran textarea {
+.select-text-area-vendas textarea {
     height: 50px;
     border: none;
     border-radius: 5px;
     outline: none;
     background-color: var(--cinza-leve);
-    width: 94%;
     padding: 10px;
 }
 
-.select-text-area-cobran label{
+.select-text-area-cobran label {
     font-weight: 500;
 }
 
@@ -675,10 +657,6 @@ tipos-arquivos-anexos a {
     font-weight: 700;
 }
 
-.container-linhas-cobran3 {
-    display: flex;
-    gap: 10px;
-}
 
 .download-delet-cobran {
     display: flex;

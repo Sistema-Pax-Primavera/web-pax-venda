@@ -22,7 +22,7 @@ import Modal from "@mui/material/Modal";
 import Documento from "../../../assets/documento.png";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useWebVendedor } from "../../services/api";
+import { useVendas } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 import PersonIcon from "@mui/icons-material/Person";
 import AcordionPerguntas from "../acordion-perguntas";
@@ -72,7 +72,7 @@ const FormularioPosVenda = () => {
   const [mostrarFormularioComerciais, setMostrarFormularioComerciais] =
     useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
-  const { getContrato } = useWebVendedor();
+  const { getContrato } = useVendas();
   const [formularioAberto, setFormularioAberto] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -82,7 +82,7 @@ const FormularioPosVenda = () => {
       setFile(selectedFile);
     }
   };
-  
+
 
   const handleDelete = () => {
     setFile(null);
@@ -543,7 +543,7 @@ const FormularioPosVenda = () => {
                         <div className="contrato-associados-anexo">
                           <label>Arquivo</label>
                           <div className="document">
-                          <PostAddIcon fontSize="large" />
+                            <PostAddIcon fontSize="large" />
                             <input
                               type="file"
                               onChange={handleFileChange}
@@ -558,7 +558,7 @@ const FormularioPosVenda = () => {
                             >
                               <button >ANEXAR</button>
                             </a>
-                            
+
                           </div>
                         </div>
                         <div className="document2">

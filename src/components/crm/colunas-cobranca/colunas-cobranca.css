@@ -1,10 +1,9 @@
-.continaer-colunas-cobr {
+.continaer-colunas-vendas-crm {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 1px;
     background-color: var(--cinza-leve);
     border-radius: 5px;
-
     max-height: 72vh;
     width: 20%;
     padding: 5px;
@@ -12,13 +11,13 @@
 
 .title-filtro-info {
     display: flex;
+    gap: 3px;
     align-items: center;
     width: 100%;
 }
 
 .title-filtro-info label {
-    width: 90%;
-    font-size: 9px;
+    font-size: 8.5px;
 }
 
 .title-filtro-info p {

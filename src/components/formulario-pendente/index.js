@@ -34,7 +34,7 @@ import Documento from "../../../assets/documento.png";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useWebVendedor } from "../../services/api";
+import { useVendas } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 import { converterData } from "../../utils/fuctions";
 import ButtonIconTextoStart from "../button-icon-texto-start";
@@ -68,7 +68,7 @@ const FormularioContratos = () => {
   const [cremacaoAtivada, setCremacaoAtivada] = useState(cliente.is_cremacao);
   const [carenciaAtivada, setCarenciaAtivada] = useState(cliente.is_carencia);
   const location = useLocation();
-  const { getContrato } = useWebVendedor();
+  const { getContrato } = useVendas();
   const [open, setOpen] = React.useState(false);
   const [showFormulario, setShowFormulario] = useState(false);
   const [mostrarFormularioGerais, setMostrarFormularioGerais] = useState(true);

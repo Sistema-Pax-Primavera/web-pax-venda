@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ColunasCobranca from "../../components/colunas-cobranca";
+import ColunasCobranca from "../../components/crm/colunas-cobranca";
 import "./crm-vendas.css";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,39 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ButtonIcon from "../../../../pax-venda/src/components/button-icon";
 import ModalLateral from "../../components/modal-lateral";
 import ButtonText from "../../../../pax-venda/src/components/button-texto/index";
-import ModalClientes from "../../components/modal-clientes";
 import BallotIcon from "@mui/icons-material/Ballot";
 import Checkbox from "@mui/material/Checkbox";
-import { useCRM } from "../../services/api";
+import { useVendas } from "../../services/api";
+import { toast } from "react-toastify";
+import Lead from "../../components/crm/lead";
+import ModalCadastro from "../../components/crm/modal-cadastro";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CRMVendas = () => {
-    const [modalAberta, setModalAberta] = useState(false); // Estado para a modal existente
+    const { getCRMVendas } = useVendas();
+    const navigate = useNavigate();
+    const colunasDinamicas = {
+        "Indicados": { id: 1, clientes: [] },
+        "Tentativa de Contato": { id: 2, clientes: [] },
+        "Oportunidade de Venda": { id: 3, clientes: [] },
+        "Aguardando Contrato": { id: 4, clientes: [] },
+        "Venda Finalizada": { id: 5, clientes: [] },
+        "Negados": { id: 6, clientes: [] },
+        "Arquivados": { id: 7, clientes: [] },
+        "Excluidos": { id: 8, clientes: [] }
+    };
+    const [dadosPorColuna, setDadosPorColuna] = useState({});
+    const [modalAberta, setModalAberta] = useState(false);
     const [modalClientes, setModalClientes] = useState(false);
     const [selectedCardData, setSelectedCardData] = useState(null);
-    const { getCRMEsc, getCRMEsBusca } = useCRM();
-    const navigate = useNavigate();
+    const [coluna, setColuna] = useState(null);
+    const [modalOportunidade, setModalOportunidade] = useState(false);
+
+    const handleCloseModalCadastro = () => {
+        setModalOportunidade(false);
+    }
+
 
     const handleCloseFormulario = () => {
         navigate("/");
@@ -34,182 +54,75 @@ const CRMVendas = () => {
         setModalClientes(!modalClientes);
     };
 
-    const handleCardClick = (cardData) => {
+    const handleCardClick = (cardData, titulo) => {
         setSelectedCardData(cardData);
+        setColuna(titulo);
+        setModalAberta(false);
         setModalClientes(true);
     };
 
     const handleCloseFormularioModal = () => {
         setModalClientes(false);
     };
+    const handleCadastroOportunidade = () => {
+        setModalOportunidade(true);
+    }
 
-    const dadosPorColuna = {
-        Indicados: [
-            {
-                titleNome: "Mateus Kronbauer Pitta",
-                numeroTelefone: "(67) 99928-2807",
-                titleIndicacao: "Jéssicas Souza",
-                titleResultado: "Prospecção",
-                data: "20/05/2023",
-            },
-            {
-                titleNome: "Mateus Kronbauer Pitta",
-                numeroTelefone: "(67) 99928-2807",
-                titleIndicacao: "Jéssicas Souza",
-                titleResultado: "Prospecção",
-                data: "20/05/2023",
-            },
-            {
-                titleNome: "Mateus Kronbauer Pitta",
-                numeroTelefone: "(67) 99928-2807",
-                titleIndicacao: "Jéssicas Souza",
-                titleResultado: "Prospecção",
-                data: "20/05/2023",
-            },
-            {
-                titleNome: "Juliana Mendonça Oliveira",
-                numeroTelefone: "(82) 98765-4321",
-                titleIndicacao: "Lucas Silva",
-                titleResultado: "Venda",
-                data: "12/08/2023",
-            },
-            {
-                titleNome: "Rodrigo Oliveira Santos",
-                numeroTelefone: "(31) 99876-5432",
-                titleIndicacao: "Fernanda Torres",
-                titleResultado: "Prospecção",
-                data: "05/06/2023",
-            },
-            {
-                titleNome: "Carla Lima Ribeiro",
-                numeroTelefone: "(55) 98765-6789",
-                titleIndicacao: "Pedro Henrique",
-                titleResultado: "Fechamento",
-                data: "15/09/2023",
-            },
-            // Adicione mais dados conforme necessário para cada coluna
-        ],
-        "Tentativa de Contato": [
-            {
-                titleNome: "Lucas Almeida Pereira",
-                numeroTelefone: "(84) 98765-1234",
-                titleIndicacao: "Ana Carolina Oliveira",
-                titleResultado: "Negociação",
-                data: "25/07/2023",
-            },
-            {
-                titleNome: "Rafael Oliveira Souza",
-                numeroTelefone: "(47) 99928-8765",
-                titleIndicacao: "Mariana Costa",
-                titleResultado: "Prospecção",
-                data: "18/04/2023",
-            },
-        ],
-        "Oportunidade de Venda": [
-            {
-                titleNome: "Maria Costa Lima",
-                numeroTelefone: "(21) 98765-2345",
-                titleIndicacao: "Gabriel Oliveira",
-                titleResultado: "Follow-up",
-                data: "10/10/2023",
-            },
-            {
-                titleNome: "Ana Santos Mendes",
-                numeroTelefone: "(61) 99876-5432",
-                titleIndicacao: "Juliana Mendonça",
-                titleResultado: "Venda",
-                data: "30/11/2023",
-            },
-            {
-                titleNome: "Jéssica Souza Pereira",
-                numeroTelefone: "(32) 98765-6789",
-                titleIndicacao: "Rodrigo Oliveira",
-                titleResultado: "Negociação",
-                data: "08/06/2023",
-            },
-            {
-                titleNome: "Fernanda Torres Oliveira",
-                numeroTelefone: "(71) 99928-2345",
-                titleIndicacao: "Lucas Almeida",
-                titleResultado: "Prospecção",
-                data: "14/03/2023",
-            },
-        ],
-        "Aguardando Contrato": [
-            {
-                titleNome: "Gabriel Oliveira Lima",
-                numeroTelefone: "(84) 98765-5432",
-                titleIndicacao: "Maria Costa",
-                titleResultado: "Venda",
-                data: "01/07/2023",
-            },
-            {
-                titleNome: "Carla Lima Pereira",
-                numeroTelefone: "(31) 99876-9876",
-                titleIndicacao: "Rafael Oliveira",
-                titleResultado: "Follow-up",
-                data: "19/10/2023",
-            },
-        ],
-        "Venda Finalizada": [
-            {
-                titleNome: "Lucas Silva Barbosa",
-                numeroTelefone: "(48) 98765-8765",
-                titleIndicacao: "Ana Santos",
-                titleResultado: "Negociação",
-                data: "26/05/2023",
-            },
-            {
-                titleNome: "Mariana Costa Oliveira",
-                numeroTelefone: "(61) 98765-4321",
-                titleIndicacao: "Jéssica Souza",
-                titleResultado: "Fechamento",
-                data: "09/08/2023",
-            },
-        ],
-        Negados: [
-            {
-                titleNome: "Pedro Henrique Mendonça",
-                numeroTelefone: "(33) 99928-9876",
-                titleIndicacao: "Pedro Barbosa",
-                titleResultado: "Venda",
-                data: "04/12/2023",
-            },
-            {
-                titleNome: "Ana Carolina Santos",
-                numeroTelefone: "(35) 98765-4321",
-                titleIndicacao: "Carla Lima",
-                titleResultado: "Negociação",
-                data: "17/06/2023",
-            },
-            {
-                titleNome: "Rodrigo Oliveira Ribeiro",
-                numeroTelefone: "(37) 99876-5432",
-                titleIndicacao: "Lucas Silva",
-                titleResultado: "Prospecção",
-                data: "28/02/2023",
-            },
-            {
-                titleNome: "Jéssica Souza Barbosa",
-                numeroTelefone: "(84) 98765-2345",
-                titleIndicacao: "Mariana Costa",
-                titleResultado: "Follow-up",
-                data: "11/11/2023",
-            },
-            {
-                titleNome: "Juliana Mendonça Pereira",
-                numeroTelefone: "(88) 99928-4321",
-                titleIndicacao: "Rodrigo Oliveira",
-                titleResultado: "Fechamento",
-                data: "07/09/2023",
-            },
-        ],
-        // Adicione dados para outras colunas conforme necessário
+    const construirColunasDinamicamente = (dadosClientes) => {
+        dadosClientes.forEach(cliente => {
+            const colunaId = cliente.coluna_id;
+            switch (colunaId) {
+                case 1:
+                    colunasDinamicas[
+                        "Indicados"
+                    ].clientes.push(cliente);
+                    break;
+                case 2:
+                    colunasDinamicas[
+                        "Tentativa de Contato"
+                    ].clientes.push(cliente);
+                    break;
+                case 3:
+                    colunasDinamicas[
+                        "Oportunidade de Venda"
+                    ].clientes.push(cliente);
+                    break;
+                case 4:
+                    colunasDinamicas[
+                        "Aguardando Contrato"
+                    ].clientes.push(cliente);
+                    break;
+                case 5:
+                    colunasDinamicas[
+                        "Venda Finalizada"
+                    ].clientes.push(cliente);
+                    break;
+                case 6:
+                    colunasDinamicas[
+                        "Negados"
+                    ].clientes.push(cliente);
+                    break;
+                case 7:
+                    colunasDinamicas[
+                        "Arquivados"
+                    ].clientes.push(cliente);
+                    break;
+                case 8:
+                    colunasDinamicas[
+                        "Excluidos"
+                    ].clientes.push(cliente);
+                    break;
+            }
+        });
+        return colunasDinamicas;
     };
 
     useEffect(() => {
-        getCRMEsc().then((data) => {
-            console.log(data)
+        getCRMVendas().then((data) => {
+            const colunas = construirColunasDinamicamente(data);
+            setDadosPorColuna(colunas);
+        }).catch((error) => {
+            toast.error('Erro ao obter dados do CRM Vendas:' + error);
         });
     }, []);
 
@@ -224,11 +137,16 @@ const CRMVendas = () => {
                         />
                     </div>
                 </div>
-                <div className="crm-escritorio-container">
+                <div className="crm-vendas-container">
                     <label>
                         <BallotIcon fontSize={"small"} />
-                        CRM Escritório
+                        CRM Vendas
                     </label>
+                    <div className="button">
+                        <ButtonText
+                            title={"Criar Oportunidade"}
+                            funcao={() => handleCadastroOportunidade()} />
+                    </div>
                 </div>
 
                 <div className="filtro-cobrancaca-escritorio">
@@ -277,29 +195,7 @@ const CRMVendas = () => {
                                         <div className="campos-filtro">
                                             <div>
                                                 <Checkbox {...label} />
-                                                <label>1º Parcela</label>
-                                            </div>
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>2º Parcela</label>
-                                            </div>
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>3º Parcela</label>
-                                            </div>
-                                        </div>
-                                        <div className="campos-filtro">
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>Óbito Inadimplente</label>
-                                            </div>
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>Anual</label>
-                                            </div>
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>3º Parcela</label>
+                                                <label>Colunas Ocultas</label>
                                             </div>
                                         </div>
                                         <div className="pesquisa-filtro-cobran">
@@ -312,23 +208,33 @@ const CRMVendas = () => {
                     </div>
                 </div>
             </div>
-            <div className="informacoes-cont-cobr">
-                {Object.entries(dadosPorColuna).map(([titulo, dados], index) => (
-                    <ColunasCobranca
-                        key={index}
-                        titulo={titulo}
-                        dados={dados}
-                        numeros={2}
-                        onCardClick={handleCardClick} // Passando a função de callback
-                    />
-                ))}
+            <div className="informacoes-crm-vendas">
+                {Object.entries(dadosPorColuna)
+                    .filter(([titulo, dados]) => titulo !== "Arquivados" && titulo !== "Excluidos")
+                    .map(([titulo, dados], index) => (
+                        <ColunasCobranca
+                            key={index}
+                            titulo={titulo}
+                            dados={dados.clientes}
+                            numeros={dados.clientes.length}
+                            onCardClick={handleCardClick}
+                        />
+                    ))}
 
                 {modalClientes && selectedCardData && (
-                    <ModalClientes
+                    <Lead
                         open={modalClientes}
                         onClose={handleCloseFormularioModal}
-                        cardData={selectedCardData}
+                        clienteData={selectedCardData}
+                        coluna={coluna}
                     />
+                )}
+
+                {modalOportunidade && (
+                    <ModalCadastro
+                        open={modalOportunidade}
+                        onClose={handleCloseModalCadastro}
+                        colunasDestino={colunasDinamicas} />
                 )}
             </div>
         </div>

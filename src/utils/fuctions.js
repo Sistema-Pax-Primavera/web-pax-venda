@@ -50,17 +50,36 @@ export function converterDataHora(dateTimeString) {
   if (!dateTimeString) {
     return '';
   }
-
-  const [datePart, timePart] = dateTimeString.split('T');
+  const dateTimeSeparator = dateTimeString.includes('T') ? 'T' : ' ';
+  const [datePart, timePart] = dateTimeString.split(dateTimeSeparator);
+  if (!datePart || !timePart) {
+    return '';
+  }
   const [year, month, day] = datePart.split('-');
-  const [hour, minute] = timePart.substring(0, 5).split(':');
+  const [hour, minute, second] = timePart.split(':');
 
-  // Verifica se year, month, day, hour e minute não são nulos ou indefinidos antes de criar a formattedDateTime
-  const formattedDateTime = (year && month && day && hour && minute) ?
+  const formattedDateTime = (year && month && day && hour && minute && second) ?
     `${day}/${month}/${year} ${hour}:${minute}` :
     '';
 
   return formattedDateTime;
+}
+
+export function converterDataParaFormatoBrasileiro(dateTimeString) {
+  if (!dateTimeString) {
+    return '';
+  }
+
+  // Separa a data e a hora da string recebida
+  const [datePart] = dateTimeString.split(' ');
+
+  // Divide a parte da data
+  const [year, month, day] = datePart.split('-');
+
+  // Verifica se year, month e day não são nulos ou indefinidos antes de criar a formattedDate
+  const formattedDate = (year && month && day) ? `${day}/${month}/${year}` : '';
+
+  return formattedDate;
 }
 
 //Função para formata valor adicionando duas casas decimais

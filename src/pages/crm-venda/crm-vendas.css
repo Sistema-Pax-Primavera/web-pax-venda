@@ -1,7 +1,7 @@
-.informacoes-cont-cobr {
+.informacoes-crm-vendas {
     width: 99%;
     display: flex;
-    gap: 10px;
+    gap: 3px;
 }
 
 .container-cobranca-escritorio {
@@ -44,20 +44,29 @@
     width: 5%;
 }
 
-.crm-escritorio-container {
-    width: 45%;
+.crm-vendas-container {
+    width: 50%;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
-.crm-escritorio-container label {
+.crm-vendas-container label {
+    width: 30%;
     color: var(--verde);
     margin-top: 8px;
     font-size: 15px;
     display: flex;
     align-items: center;
-    gap: 10px;
+}
+
+.crm-vendas-container .button {
+    width: 30%;
+    color: var(--verde);
+    margin-top: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .button-retorn2 {

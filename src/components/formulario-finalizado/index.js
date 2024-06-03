@@ -23,7 +23,7 @@ import Documento from "../../../assets/documento.png";
 import "./formulario-finalizados.css";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useWebVendedor } from "../../services/api";
+import { useVendas } from "../../services/api";
 import IconeButtonTable from "../../../../pax-associado/src/components/button-icon-texto";
 
 const style = {
@@ -77,7 +77,7 @@ const FormularioContratosFinalizados = () => {
   const [mostrarFormularioComerciais, setMostrarFormularioComerciais] =
     useState(false);
   const [mostrarBotoes, setMostrarBotoes] = useState(false);
-  const { getContrato } = useWebVendedor();
+  const { getContrato } = useVendas();
 
   const handleOpen = () => {
     setMostrarBotoes(true);
