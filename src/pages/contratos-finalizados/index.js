@@ -19,7 +19,7 @@ const ContratosFinalizados = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const { getContratos, getContratoBusca } = useVendas();
+  const { getContratos, getContratoBusca, getContratosFinalizados } = useVendas();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSearch = () => {
@@ -53,13 +53,14 @@ const ContratosFinalizados = () => {
   const handleOpenFormulario = (contrato) => {
     //navigate("/contratos-finalizados/contrato-finalizado", { state: { contrato } });
     //id fixado para teste
+    console.log(contrato)
     contrato = 5;
     navigate("/contratos-finalizados/contrato-finalizado", { state: contrato });
     localStorage.setItem("page-venda", "/contrato-finalizado");
   };
 
   useEffect(() => {
-    getContratos().then((data) => {
+    getContratosFinalizados().then((data) => {
       const contratosFinalizados = data.filter(
         (contrato) => contrato.statusId === 2
       );

@@ -180,17 +180,30 @@ const ModalCadastro = ({ open, onClose, colunasDestino }) => {
                                 <div className="oportunidade-cliente">
                                     <div className="campo-form">
                                         <label>Observações</label>
-                                        <textarea />
+                                        <div className="text-area-cadastro">
+                                            <textarea
+                                                placeholder="Descreva aqui a observação"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="infor-modal-oportunidade-crm">
                                 <div className="oportunidade-cliente">
                                     <div className="campo-form">
-                                        <label>Marca oportunidade como ganha</label>
-                                        <input type="checkbox" />
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" /> Marca oportunidade como ganha
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="button-salvar-modal-cadastro">
+                                <ButtonText
+                                    title={"SALVAR"}
+                                    funcao={''}
+                                />
                             </div>
                         </div>
                     </div>

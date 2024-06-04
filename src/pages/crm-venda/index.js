@@ -13,6 +13,9 @@ import { useVendas } from "../../services/api";
 import { toast } from "react-toastify";
 import Lead from "../../components/crm/lead";
 import ModalCadastro from "../../components/crm/modal-cadastro";
+import ModalTransferir from "../../components/crm/modal-transferir";
+import ModalArquivar from "../../components/crm/modal-arquivar";
+import FiltroCRM from "../../components/crm/filtro";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -35,11 +38,9 @@ const CRMVendas = () => {
     const [selectedCardData, setSelectedCardData] = useState(null);
     const [coluna, setColuna] = useState(null);
     const [modalOportunidade, setModalOportunidade] = useState(false);
-
-    const handleCloseModalCadastro = () => {
-        setModalOportunidade(false);
-    }
-
+    const [colunasOcultas, setColunasOcultas] = useState(false);
+    const [modalTransferencia, setModalTransferencia] = useState(false);
+    const [modalArquivar, setModalArquivar] = useState(false);
 
     const handleCloseFormulario = () => {
         navigate("/");
@@ -50,9 +51,6 @@ const CRMVendas = () => {
         setModalAberta(!modalAberta);
     };
 
-    const toggleModalClientes = () => {
-        setModalClientes(!modalClientes);
-    };
 
     const handleCardClick = (cardData, titulo) => {
         setSelectedCardData(cardData);
@@ -61,11 +59,32 @@ const CRMVendas = () => {
         setModalClientes(true);
     };
 
-    const handleCloseFormularioModal = () => {
+    const handleCloseModalOportunidade = () => {
+        setModalOportunidade(false);
+    }
+
+    const handleCloseLead = () => {
         setModalClientes(false);
-    };
+    }
+
+    const handleCloseModalArquivar = () => {
+        setModalArquivar(false);
+    }
+
+    const handleModalCloseTransferencia = () => {
+        setModalTransferencia(false);
+    }
+
     const handleCadastroOportunidade = () => {
         setModalOportunidade(true);
+    }
+
+    const handleModalTransferencia = () => {
+        setModalTransferencia(true);
+    }
+
+    const handleModalArquivar = () => {
+        setModalArquivar(true);
     }
 
     const construirColunasDinamicamente = (dadosClientes) => {
@@ -142,100 +161,88 @@ const CRMVendas = () => {
                         <BallotIcon fontSize={"small"} />
                         CRM Vendas
                     </label>
+
                     <div className="button">
                         <ButtonText
                             title={"Criar Oportunidade"}
                             funcao={() => handleCadastroOportunidade()} />
                     </div>
-                </div>
 
+                </div>
                 <div className="filtro-cobrancaca-escritorio">
                     <div className="button-retorn2">
-                        <ButtonIcon
-                            icon={<FilterAltIcon fontSize={"small"} />}
-                            funcao={toggleModal}
-                        />
-                        {modalAberta && (
-                            <ModalLateral
-                                isOpen={modalAberta}
-                                toggleModal={toggleModal}
-                                conteudo={
-                                    <div className="container-modal-lateral">
-                                        <h1>Filtro</h1>
-                                        <div className="campos-filtro">
-                                            <div className="filtro-colun-cobran">
-                                                <label>Colunas</label>
-                                                <select>
-                                                    <option>Indicados</option>
-                                                    <option>Tentativa de Contato</option>
-                                                    <option>Oportunidade de Venda</option>
-                                                    <option>Concluídos com Sucesso</option>
-                                                    <option>Negados</option>
-                                                    <option>Pagamento de Mensalidades</option>
-                                                </select>
-                                            </div>
-                                            <div className="filtro-data-cobran">
-                                                <label>Data Criação</label>
-                                                <input type="date"></input>
-                                            </div>
-                                        </div>
-                                        <div className="campos-filtro">
-                                            <div className="campos-01-cobranca">
-                                                <label>Nome</label>
-                                                <input placeholder="Informe o Nome"></input>
-                                            </div>
-                                            <div className="indicacoes-cliente-cobran">
-                                                <label>Telefone</label>
-                                                <input type="number"></input>
-                                            </div>
-                                        </div>
-                                        <div className="campos-filtro">
-                                            <label>Selecione:</label>
-                                        </div>
-                                        <div className="campos-filtro">
-                                            <div>
-                                                <Checkbox {...label} />
-                                                <label>Colunas Ocultas</label>
-                                            </div>
-                                        </div>
-                                        <div className="pesquisa-filtro-cobran">
-                                            <ButtonText title="PESQUISAR" />
-                                        </div>
-                                    </div>
-                                }
-                            ></ModalLateral>
-                        )}
+                        <div className="button-filtro">
+                            <ButtonIcon
+                                icon={<FilterAltIcon fontSize={"small"} />}
+                                funcao={toggleModal}
+                            />
+                        </div>
+                        <FiltroCRM
+                            modalAberta={modalAberta}
+                            toggleModal={toggleModal}
+                            colunasDinamicas={colunasDinamicas}
+                            colunasOcultas={colunasOcultas}
+                            setColunasOcultas={setColunasOcultas} />
                     </div>
+
                 </div>
             </div>
             <div className="informacoes-crm-vendas">
-                {Object.entries(dadosPorColuna)
-                    .filter(([titulo, dados]) => titulo !== "Arquivados" && titulo !== "Excluidos")
-                    .map(([titulo, dados], index) => (
-                        <ColunasCobranca
-                            key={index}
-                            titulo={titulo}
-                            dados={dados.clientes}
-                            numeros={dados.clientes.length}
-                            onCardClick={handleCardClick}
-                        />
-                    ))}
+                {colunasOcultas ? (
+                    Object.entries(dadosPorColuna)
+                        .filter(([titulo, dados]) => titulo === "Arquivados" || titulo === "Excluidos")
+                        .map(([titulo, dados], index) => (
+                            <ColunasCobranca
+                                key={index}
+                                titulo={titulo}
+                                dados={dados.clientes}
+                                numeros={dados.clientes.length}
+                                onCardClick={handleCardClick}
+                                modalTransferencia={handleModalTransferencia}
+                                modalArquivar={handleModalArquivar}
+                            />
+                        ))
+                ) : (
+                    Object.entries(dadosPorColuna)
+                        .filter(([titulo, dados]) => titulo !== "Arquivados" && titulo !== "Excluidos")
+                        .map(([titulo, dados], index) => (
+                            <ColunasCobranca
+                                key={index}
+                                titulo={titulo}
+                                dados={dados.clientes}
+                                numeros={dados.clientes.length}
+                                onCardClick={handleCardClick}
+                                modalTransferencia={handleModalTransferencia}
+                                modalArquivar={handleModalArquivar}
+                            />
+                        ))
+                )}
 
                 {modalClientes && selectedCardData && (
                     <Lead
                         open={modalClientes}
-                        onClose={handleCloseFormularioModal}
+                        onClose={handleCloseLead}
                         clienteData={selectedCardData}
                         coluna={coluna}
                     />
                 )}
 
-                {modalOportunidade && (
-                    <ModalCadastro
-                        open={modalOportunidade}
-                        onClose={handleCloseModalCadastro}
-                        colunasDestino={colunasDinamicas} />
-                )}
+                <ModalArquivar
+                    open={modalArquivar}
+                    onClose={handleCloseModalArquivar}
+                    colunasDestino={colunasDinamicas} />
+
+
+                <ModalTransferir
+                    open={modalTransferencia}
+                    onClose={handleModalCloseTransferencia}
+                    colunasDestino={colunasDinamicas} />
+
+                <ModalCadastro
+                    open={modalOportunidade}
+                    onClose={handleCloseModalOportunidade}
+                    colunasDestino={colunasDinamicas} />
+
             </div>
         </div>
     );

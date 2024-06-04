@@ -13,6 +13,12 @@ export const useVendas = () => {
         return data.map((item) => Vendas(item));
     };
 
+    const getContratosFinalizados = async () => {
+        const response = await https.get("/contratos-finalizados");
+        const { data } = response;
+        return data.map((item) => Vendas(item));
+    };
+
     const getContratoBusca = async (value) => {
         try {
             const response = await https.get(`/contratos/busca?value=${value}`);
@@ -69,6 +75,7 @@ export const useVendas = () => {
 
     return {
         getContratos,
+        getContratosFinalizados,
         getContratoBusca,
         getContrato,
         getCRMVendas

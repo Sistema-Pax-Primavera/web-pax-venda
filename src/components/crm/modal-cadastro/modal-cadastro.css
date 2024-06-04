@@ -43,3 +43,26 @@
     color: var(--preto);
     font-weight: 600;
 }
+
+.button-salvar-modal-cadastro {
+    padding-left: 35%;
+    padding-right: 35%;
+    margin-top: 10px;
+}
+
+.text-area-cadastro {
+    gap: 3px;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-area-cadastro textarea {
+    height: 70px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    padding: 10px;
+}

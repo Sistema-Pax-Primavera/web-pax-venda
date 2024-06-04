@@ -32,12 +32,6 @@ const HeaderVendas = ({ idioma }) => {
   return (
     <div className='navegacao-vendas'>
       <button
-        onClick={() => handleMenuClick("/crm-vendas")}
-        className={activeRoute === "/crm-vendas" ? "active" : ""}
-      >
-        {idioma ? idiomas.es_PY.header.crm : idiomas.pt_BR.header.crm}
-      </button>
-      <button
         onClick={() => handleMenuClick("/contratos")}
         className={activeRoute === "/contratos" ? "active" : ""}
       >
@@ -49,17 +43,23 @@ const HeaderVendas = ({ idioma }) => {
       >
         {idioma ? idiomas.es_PY.header.contratoFinalizado : idiomas.pt_BR.header.contratoFinalizado}
       </button>
-      <button
+      {/* <button
         onClick={() => handleMenuClick("/cadastro")}
         className={activeRoute === "/cadastro" ? "active" : ""}
       >
         {idioma ? idiomas.es_PY.header.cadastro : idiomas.pt_BR.header.cadastro}
-      </button>
+      </button> */}
       <button
         onClick={() => handleMenuClick("/cancelamento")}
         className={activeRoute === "/cancelamento" ? "active" : ""}
       >
         {idioma ? idiomas.es_PY.header.cancelamento : idiomas.pt_BR.header.cancelamento}
+      </button>
+      <button
+        onClick={() => handleMenuClick("/crm-vendas")}
+        className={activeRoute === "/crm-vendas" ? "active" : ""}
+      >
+        {idioma ? idiomas.es_PY.header.crm : idiomas.pt_BR.header.crm}
       </button>
     </div>
   );
